@@ -1,0 +1,415 @@
+<!doctype html>
+<html>
+	<head>
+		<title>
+			Eve.js - The JavaScript Metaframework
+		</title>
+		<link rel="stylesheet" href="styles/main.css"/>
+	</head>
+	<body>
+		
+		<div id="top">
+			
+			<div class="content">
+				
+				<h1>Eve.js</h1>
+		
+				<h2>The JavaScript Metaframework</h2>
+				
+				<!--div class="download-cta">
+					<a href="#">Download</a>
+					<p class="version">Version 1.0</p>
+				</div-->
+				
+				<p class="blurb">
+					The <em>featherweight</em> JavaScript 
+					<em>meta-framework</em> which hooks into <em>any major 
+					JavaScript library</em> to make <em>scoped event
+					delegation</em> and <em>modular encapsulation</em>
+					automatic and painless.
+				</p>
+				
+				<div class="kickstart">
+					<h3>Kickstart your next project with:</h3>
+					<p><span class="terminal">
+						<span class="prompt">&gt;</span> wget
+						<a href="http://evejs.com/stable/eve.js">
+							http://evejs.com/stable/eve.js
+						</a>	
+					</span></p>
+				</div>
+		
+				<div class="framework-support">
+				
+					<h3>Supported Frameworks</h3>
+					
+					<ul>
+						<li class="jquery"><a href="http://jquery.com">jQuery</a></li>
+						<li class="mootools"><a href="http://mootools.net">MooTools</a></li>
+						<li class="prototype"><a href="http://prototypejs.com">Prototype</a></li>
+						<li class="dojo"><a href="http://dojotoolkit.org">Dojo</a></li>
+						<li class="yui"><a href="http://developer.yahoo.com/yui/">YUI</a></li>
+					</ul>
+					
+				</div>
+				
+				<navigation>
+					<ul class="navigation">
+					
+					</ul>
+				</navigation>
+			
+			</div>
+			
+		</div>
+		
+		<section id="examples" class="content">
+			
+			<h1>Examples</h1>
+				
+			<div class="content">
+				
+			<div class="example">
+				
+				<h2>Scoping</h2>
+				
+				<p>
+					The below code scopes everything within the function to
+					the <code>.hello-world</code> namespace within the DOM.
+				</p>
+				
+				<p>
+					Eve then binds two useful methods to the function: 
+					<code>listen</code> and <code>attach</code>.  These
+					methods ensure that all actions within the function are
+					scoped to the parent (<code>.hello-world</code>) DOM 
+					namespace.
+				</p>
+				
+				<script src="https://gist.github.com/2388452.js?file=eve-hello-world.js"></script>
+				
+			</div>
+			
+			<div class="example">
+				
+				<h2>Reusable Modules</h2>
+				
+				<p>
+					Eve allows you to create reusable modules which you can 
+					then <code>attach</code> to any scoped function or
+					CSS namespace.
+				</p>
+				
+				<script src="https://gist.github.com/2389510.js?file=eve-attach.js"></script>
+				
+				<script src="https://gist.github.com/2389442.js?file=eve-scoped-attach.js"></script>
+				
+			</div>
+			
+			
+			</div>
+			
+		</section>
+		
+		
+		<section id="documentation" class="content">
+			
+			<h1>Documentation</h1>
+			
+			<div class="content">
+				
+				<h2>Global Methods</h2>
+				
+				<h3>Eve.scope</h3>
+				
+				<p>
+					Scopes the given function to a particular CSS namespace.
+					Eve attaches <code>listen</code> and
+					<code>attach</code> methods to each scoped function.
+					When calling these methods from within the function, 
+					you'll automatically remain within the scoped
+					namespace.
+				</p>
+				
+				<h4>Syntax</h4>
+				
+				<p class="syntax">
+					Eve.scope(<code>namespace</code>, <code>function</code>);
+				</p>
+				
+				<h4>Arguments</h4>
+				
+				<ul class="arguments">
+					<li>
+						<code>namespace</code> (string): The CSS selector of
+						the elements which will be effected by the provided
+						function.
+					</li>
+					<li>
+						<code>function</code> (function): This function
+						will be responsible for all code related to the
+						given CSS namespace.
+					</li>
+
+				</ul>
+				
+				<h4>Example</h4>
+				
+				<script src="https://gist.github.com/2388452.js?file=eve-hello-world.js"></script>
+				
+				<h3>Eve.register</h3>
+				
+				<p>
+					Allows you to register a reusable module which can then
+					be utilized via the <code>attach</code> method.
+					Module functions have no default namespace of their own,
+					and instead will rely on the namespace provided when
+					attaching.
+				</p>
+				
+				<h4>Syntax</h4>
+				
+				<p class="syntax">
+					Eve.register(<code>moduleName</code>, <code>function</code>);
+				</p>
+				
+				<h4>Arguments</h4>
+				
+				<ul class="arguments">
+					<li>
+						<code>moduleName</code> (string): The name of the 
+						module.  This can be anything, as long as it's 
+						unique.
+					</li>
+					<li>
+						<code>function</code> (function): This function
+						will be run within a scoped namespace when
+						attached.  Note: this function will only run ONCE
+						per namespace.
+					</li>
+
+				</ul>
+				
+				<h4>Example</h4>
+				
+				<script src="https://gist.github.com/2389413.js?file=eve-register.js"></script>
+				
+				<h3>Eve.attach</h3>
+				
+				<p>
+					Attaches a previously registered module to the specified
+					CSS namespace.
+				</p>
+				
+				<h4>Syntax</h4>
+				
+				<p class="syntax">
+					Eve.attach(moduleName, namespace);
+				</p>
+				
+				<h4>Arguments</h4>
+				
+				<ul class="arguments">
+					<li>
+						<code>moduleName</code> (string): The name of the 
+						module to attach.  It must have previously been
+						registered using <code>Eve.register</code>.
+					</li>
+					<li>
+						<code>namespace</code> (string): The CSS selector of
+						the elements which will be effected by the named
+						module.
+					</li>
+				</ul>
+				
+				<h4>Example</h4>
+				
+				<script src="https://gist.github.com/2389510.js?file=eve-attach.js"></script>
+				
+				<h3>Eve.debug</h3>
+				
+				<p>
+					Logs detailed information concerning event execution
+					and responsible modules to to the console.
+				</p>
+				
+				<h4>Syntax</h4>
+				
+				<p class="syntax">
+					Eve.debug([<code>moduleName</code>]);
+				</p>
+				
+				<h4>Arguments</h4>
+				
+				<ul class="arguments">
+					<li>
+						<code>moduleName</code> (optional): If a module
+						name is provided, only events the given module is
+						listening to will be logged.  If no moduleName is
+						provided, all events will be logged to the console.
+					</li>
+				</ul>
+				
+				<h4>Example</h4>
+				
+				<script src="https://gist.github.com/2389482.js?file=eve-debug.js"></script>
+				
+				<h2>Scoped Methods</h2>
+				
+				<p>
+					Eve attaches two methods to each scoped function attached
+					via <code>Eve.scope</code> or <code>Eve.register</code>.
+					When calling these methods from within the function, 
+					you'll automatically remain within the scoped
+					namespace.
+				</p>
+				
+				<h3>listen</h3>
+				
+				<p>
+					Begins watching for events which match the particular
+					eventType and CSS selector, as long as the given CSS
+					selector is part of the parent namespace.
+				</p>
+				
+				<h4>Syntax</h4>
+				
+				<p class="syntax">
+					this.listen([<code>selector</code>,] <code>eventType</code>, <code>handler</code>);
+				</p>
+				
+				<h4>Arguments</h4>
+				
+				<ul class="arguments">
+					<li>
+						<code>selector</code> (string, optional): The CSS selector  of the 
+						elements you want to attach events to.  If no selector
+						is given, any event of the given type within the
+						scoped namespace will invoke the handler.
+					</li>
+					<li>
+						<code>eventType</code> (string): The event type, such as click or
+						mouseover.
+					</li>
+					<li>
+						<code>handler</code> (function): The function to call when the
+						specified event type has taken place on a matching
+						element.
+					</li>
+				</ul>
+				
+				<h4>Example</h4>
+				
+				<script src="https://gist.github.com/2389442.js?file=eve-scoped-attach.js"></script>
+				
+				<h3>attach</h3>
+				
+				<p>
+					Works exactly like <code>Eve.attach</code>, but will 
+					confine the attached module to the current scope.
+				</p>
+				
+				
+				<h4>Example</h4>
+				
+				<script src="https://gist.github.com/2389442.js?file=gistfile1.txt"></script>
+				
+				
+			</div>
+			
+		</section>
+		
+		<section id="features" class="content">
+			
+			<h1>Features</h1>
+			
+			<div class="content">
+				
+				<h2>Powerful</h2>
+				
+				<p>
+					With proper use of Eve.js, it's possible to reduce the
+					JavaScript you write by up to <code>80%</code>.
+				</p>
+				
+				<p>
+					Because Eve.js takes the hassle out of organizing and
+					managing complex applications, you can focus on the
+					important features of your site.
+				</p>
+				
+				<h2>Minimalist</h2>
+				
+				<p>
+					Eve.js is very small: less than 5kb uncompressed.
+					With a total of four simple methods to learn, you can
+					master it in less than an hour.
+				</p>
+				
+				<h2>Flexible</h2>
+				
+				<p>
+					There's no need to rewrite a single line of code to get
+					started.  Eve.js is fully compatible with all legacy
+					JavaScript applications.  
+				</p>
+				
+				<p>
+					Since it works on top of your existing framework library,
+					you'll be able to continue to write code the way you're
+					used to, just less of it!
+				</p>
+				
+				<h2>Painless Organization</h2>
+				
+				<p>
+					With Eve, you won't have to waste any time at the start
+					of your project deciding how to organize your code.
+				</p>
+				
+				
+				<h2>Automatic Event Delegation</h2>
+				
+				<p>
+					Don't worry if you don't understand what event delegation
+					is&mdash;Eve handles it automatically!
+				</p>
+				
+				<p>
+					Using Eve, you'll never have to worry about reattaching
+					events to elements after an AJAX call or a dynamic update
+					of the page.
+				</p>
+				
+				<h2>Time-Saving Debugging</h2>
+				
+				<p>
+					Have you ever worked on a large website and spent hours
+					digging through code to find a few lines of JavaScript?
+				</p>
+				
+				<p>
+					By enabling Eve's debug mode, you'll receive a real-time
+					log of all events as they're being triggered, along with
+					the name of the module in effect.
+				</p>
+				
+			</div>
+			
+		</section>
+			
+		</section>
+			
+		<div id="bottom">
+			
+		</div>
+			
+			
+		</div>
+	
+		<style type="text/css">
+			@import url('styles/gist.css');
+		</style>
+	
+	</body>
+</html>

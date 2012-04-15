@@ -1,0 +1,31 @@
+/** Gist Overrides **/
+
+.gist {
+	margin:10px auto;
+}
+
+.gist .gist-file {
+	border:0;
+}
+
+.gist .gist-file .gist-data {
+    background-color: #000000;
+    border-bottom: 1px solid #333;
+}
+
+.gist {
+    color: #DAEAFF;
+}
+
+.gist-syntax .kd,.gist-syntax .k {
+    color: #fff;
+    font-weight: bold;
+}
+
+.gist .gist-file .gist-meta {
+	background: #0F294A;
+    color: #666666;
+    font-size: 85%;
+    overflow: hidden;
+    padding: 0.5em;
+}

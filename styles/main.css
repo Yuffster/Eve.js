@@ -1,0 +1,240 @@
+@import url('reset.css');
+
+body {
+	background: #0F294A;
+	font-family:Helvetica,Arial,sans-serif;
+	color:white;
+}
+
+i {
+	font-variant: italic;
+}
+
+#top {
+	padding:20px 0;
+	background: #1E5799 url('i/eve_bg.png') no-repeat left bottom;
+	border-bottom:3px solid #000;
+}
+
+/* Logo */
+#top h1 {
+	text-indent: -999em;
+	outline:none;
+	width:255px;
+	height:90px;
+	background: url('i/logo_eve_253.png') no-repeat;
+	color: #DCBC45;
+}
+
+#top h2 {
+	display:none;
+}
+
+/* Download butotn */
+#top .download-cta {
+	position:absolute;
+	right:0;
+	top:10px;
+}
+
+#top .download-cta a {
+	display:block;
+	text-indent:-999em;
+	outline:none;
+	height:47px;
+	width:176px;
+	background:url('i/button_download.png') no-repeat;
+}
+
+#top .download-cta .version {
+	text-align:center;
+	color:white;
+	font-size: 10px;
+}
+
+/* Blurb */
+
+#top .blurb {
+	font-size: 24px;
+	color: #daeaff;
+	width:80%;
+	margin:50px auto;
+	line-height:120%;
+}
+
+#top .blurb em {
+	color:#fff;
+	text-shadow: 1px 1px 0 #000;
+}
+
+#top .example {
+	width:80%;
+	margin:20px auto;
+}
+#top .example h3 {
+	font-size: 34px;
+	color: #dcbc45;
+	text-shadow: 2px 2px 0 #000;
+}
+
+/* Kickstart */
+
+#top .kickstart {
+	margin-bottom:80px;
+}
+
+#top .kickstart h3 {
+	font-size:32px;
+	text-shadow: 2px 2px 0 #000;
+	text-align:center;
+	margin-bottom:30	px;
+}
+
+#top .kickstart p {
+	text-align:center;
+	margin:20px;
+}
+
+#top .kickstart .terminal {
+	padding:10px;
+	background:#000;
+	color: #ccc;
+	font-size: 30px;
+	font-family:Monaco,monospace;
+}
+
+#top .kickstart .terminal a {
+	color: #dcbc45;
+	text-decoration:none;
+}
+
+#top .kickstart .prompt {
+	color: #777;
+}
+
+/* Framework Logos */
+
+#top .framework-support h3 {
+	text-align:center;
+	font-size:20px;
+	text-shadow: 1px 1px 0 #000;
+}
+
+#top .framework-support ul {
+	text-align:center;
+	margin:20px 0;
+}
+
+#top .framework-support li {
+	display: inline-block;
+	text-indent: -999em;
+	outline:none;
+	margin: 0 20px;
+}
+
+#top .framework-support li a {
+	display:block;
+	height:50px;
+	opacity:.7;
+}
+
+#top .framework-support li a:hover {
+	opacity:1;
+}
+
+#top .framework-support li.mootools a {
+	width: 200px;
+	background: url('i/logo_mootools_200.png') center no-repeat;
+}
+
+#top .framework-support li.jquery a {
+	width: 200px;
+	background: url('i/logo_jquery_200.png') center no-repeat;
+}
+
+#top .framework-support li.dojo a {
+	width: 77px;
+	background:url('i/logo_dojo_77.png') center no-repeat;
+}
+
+#top .framework-support li.prototype a {
+	width: 123px;
+	background: url('i/logo_prototype_123.png') center no-repeat;
+}
+
+#top .framework-support li.yui a{
+	width: 116px;
+	background: url('i/logo_yui_116.png') center no-repeat;
+}
+
+#bottom {
+	
+}
+
+/* Main body */
+
+h1 {
+	font-size: 38px;
+	color: #dcbc45;
+	margin:36px 0;
+	text-shadow:2px 2px 0px #000;
+	text-align:center;
+}
+
+h2 {
+	font-size:30px;
+	text-shadow:2px 2px 0px #000;
+	margin-top:50px;
+}
+
+h3 {
+	font-size:24px;
+	margin:20px 0;
+}
+
+h4 {
+	font-size:18px;
+	margin:10px 0;
+}
+
+.content {
+	position:relative;
+	width:970px;
+	margin:auto;
+}
+
+section p {
+	color: #DAEAFF;
+	margin:10px auto;
+	font-size: 20px;
+	line-height: 125%;
+}
+
+section code {
+	color: #fff;
+	text-shadow: 1px 1px 1px #000;
+}
+
+section .content {
+	width: 70%;
+	margin:auto;
+}
+
+ul.arguments {
+	margin-left: 20px;
+	line-height:150%;
+}
+
+ul.arguments li {
+	margin-bottom: 10px;
+	color: #DAEAFF;
+}
+
+#documentation h3 {
+	text-shadow: 2px 2px 0px #000;
+}
+
+#documentation .syntax {
+	margin-left:20px;
+	font-size:12pt;
+}
