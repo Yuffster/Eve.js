@@ -1,9 +1,16 @@
 @import url('reset.css');
 
 body {
+	margin: 0;
 	background: #0F294A;
 	font-family:Helvetica,Arial,sans-serif;
 	color:white;
+	padding-bottom:50px;
+}
+
+a {
+	color:#DCBC45;
+	text-decoration:none;
 }
 
 i {
@@ -11,13 +18,18 @@ i {
 }
 
 #top {
-	padding:20px 0;
-	background: #1E5799 url('i/eve_bg.png') no-repeat left bottom;
 	border-bottom:3px solid #000;
+	background: #1E5799;
+}
+
+#top .content {
+	padding:10px 0;
+	background: url('i/eve_bg.png') no-repeat left bottom;
 }
 
 /* Logo */
 #top h1 {
+	margin: 0;
 	text-indent: -999em;
 	outline:none;
 	width:255px;
