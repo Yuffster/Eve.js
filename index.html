@@ -457,7 +457,6 @@
 				};
 
 				jsonp('https://api.github.com/repos/Yuffster/eve.js/tags', function(d) { 
-					console.log(d);
 				    document.getElementById('latest-version').innerHTML = d.data[0].name;
 				});
 				
