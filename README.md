@@ -12,10 +12,10 @@ The below code scopes everything within the function to the .hello-world namespa
 
 Eve then binds two useful methods to the function: listen and attach. These methods ensure that all actions within the function are scoped to the parent (.hello-world) DOM namespace.
 
-	Eve.register('myAwesomePlugin', function() {
+	Eve.scope('.hello-world', function() {
 
-	    this.listen('a', 'click', function() {
-	        console.log("You clicked on a link within my namespace!");
+	    this.listen('div.line', 'click', function(e) {
+	        console.log("You clicked on .hello-world div.line");
 	    });
 
 	});
