@@ -37,6 +37,7 @@ window.Eve = {
     __debugAll: false,
     
     dbug: function(name, message) {
+		if (!window.console) { return; }
         var debug = this.__debugAll;
         if (!this.__debugAll) {
             debug = false;
