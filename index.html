@@ -13,6 +13,16 @@
 			<div class="content">
 				
 				<h1>Eve.js</h1>
+				
+				<div class="github-cta">
+					<a class="btn btn-large" href="http://github.com/Yuffster/Eve.js">
+						<span>View Project on GitHub</span>
+					</a>
+					<p class="version">
+						Latest version:
+						<span id="latest-version"></version>
+					</p>
+				</div>
 		
 				<h2>The JavaScript Metaframework</h2>
 				
@@ -430,6 +440,29 @@
 		<style type="text/css">
 			@import url('styles/gist.css');
 		</style>
+		
+		<script>
+			/* Automatically update the version number until I have time to
+			   make the site more dynamic.
+			 */
+			(function() {
+				
+				function jsonp(url,callback) {
+				    var cbname = 'callback_'+Math.random().toString(36).substring(7)+new Date().getTime();
+				    url = (url.match(/\?/)) ? url+'&callback='+cbname : url+'?callback='+cbname;
+				    window[cbname] = callback;
+				    var s = document.createElement('script');
+				    s.src = url;
+				    document.getElementsByTagName('head')[0].appendChild(s);
+				};
+
+				jsonp('https://api.github.com/repos/Yuffster/eve.js/tags', function(d) { 
+					console.log(d);
+				    document.getElementById('latest-version').innerHTML = d.data[0].name;
+				});
+				
+			})();
+		</script>
 	
 	</body>
 </html>
