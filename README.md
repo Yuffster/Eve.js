@@ -75,13 +75,13 @@ Eve.scope(namespace, function);
 
 ##### Example
 
-Eve.scope('.hello-world', function() {
+	Eve.scope('.hello-world', function() {
 
-    this.listen('div.line', 'click', function(e) {
-        console.log("You clicked on .hello-world div.line");
-    });
+	    this.listen('div.line', 'click', function(e) {
+	        console.log("You clicked on .hello-world div.line");
+	    });
 
-});
+	});
 
 #### Eve.register
 
