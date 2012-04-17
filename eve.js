@@ -77,6 +77,7 @@ window.Eve = {
 			name: ns,
 			namespace: ns,
 			listen: this.delegateScoped,
+			find: this.findFromScope,
 			attach: this.attachFromScope
 		}, [ns]);
 	},
@@ -94,7 +95,9 @@ window.Eve = {
 		}
 		var mod = this.__registry[moduleName].apply({
 			namespace:namespace,
-			listen:this.delegateScoped,
+			listen: this.delegateScoped,
+			find: this.findFromScope,
+			attach: this.attachFromScope,
 			name:moduleName
 		}, [namespace]);
 		this.__attachments[moduleName+namespace] = mod;
@@ -112,10 +115,12 @@ window.Eve = {
 		}
 		var name = this.name,
 			sel	 = (this.namespace+' '+selector).trim(),
-			fun	 = function() {
+			obj  = { };
+			for (k in this) if (this.hasOwnProperty(k))	obj[k] = this[k];
+			function fun(e) {
 				Eve.dbug(name, sel+':'+event);
-				//Simple pass-through of scope and arguments.
-				handler.apply(this, arguments);
+				obj.event = e;
+				handler.apply(obj, arguments);
 			};
 		//JavaScript framework development is so much easier when you let some
 		//other framework do most of the work.
@@ -142,6 +147,37 @@ window.Eve = {
 	//This method is bound to the namespaced closure.
 	attachFromScope: function(moduleName, ns) {
 		Eve.attach(moduleName, this.namespace+' '+(ns||''));
+	},
+	
+	findFromScope: function(sel) {
+		var scope;
+		sel = sel.trim();
+		//Scope to the particular instance of the DOM module active in this
+		//event.
+		if (this.event) {
+			var t = $(this.event.target)
+			if (window.jQuery) {
+				if (t.is(this.namespace)) return t;
+				scope = t.parents(this.namespace);
+				return (sel) ? scope.find(sel) : scope;
+			} else if (window.MooTools) {
+				if (t.matches(this.namespace)) return t;
+				scope = t.getParent(this.namespace);
+				return (sel) ? scope.getChildren(sel) : scope;
+			} else if (window.Prototype) {
+				if (t.match(this.namespace)) return t;
+				scope = t.up(this.namespace);
+				return (sel) ? scope.select(sel) : scope;
+			}
+		//Scope to the DOM namespace across all instances.
+		} else if (this.namespace) {
+			sel = this.namespace+sel;
+			if (window.jQuery||window.Prototype) {
+				return $(sel);
+			} else if (window.MooTools) {
+				return $$(sel);
+			} 
+		}
 	}
 
 };
