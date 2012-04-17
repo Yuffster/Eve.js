@@ -208,3 +208,32 @@ Works exactly like Eve.attach, but will confine the attached module to the curre
 	    this.attach('myAwesomePlugin', '.subsection');
 
 	});
+
+#### find
+
+Finds elements from within the context of the current scoped instance. If called from a scope, find will return all elements matching the given selector within the parent namespace.  If called from an event (listen) handler, only elements within the same instance of the parent scope from which the event has been called will be returned.
+
+##### Syntax
+
+this.find(selector);
+
+##### Arguments
+
+- selector (string): A CSS selector.
+
+##### Example
+
+	Eve.scope('.image-slideshow', function() {
+
+		//Will return all .image-slideshow img items.
+		this.find('img');
+		
+	    this.listen('a', 'click', function() {
+		
+			// Only returns img.active items within the current
+			// .image-slideshow element.
+	        this.find('img.active');
+	
+	    });
+
+	});
