@@ -158,3 +158,53 @@ Eve.debug([moduleName]);
 ##### Example
 
 	Eve.debug('myAwesomeModule');
+
+### Scoped Methods
+
+Eve attaches two methods to each scoped function attached via Eve.scope or Eve.register. When calling these methods from within the function, you'll automatically remain within the scoped namespace.
+
+#### listen
+
+Begins watching for events which match the particular eventType and CSS selector, as long as the given CSS selector is part of the parent namespace.
+
+##### Syntax
+
+this.listen([selector,] eventType, handler);
+
+##### Arguments
+
+- selector (string, optional): The CSS selector of the elements you want to attach events to. If no selector is given, any event of the given type within the scoped namespace will invoke the handler.
+- eventType (string): The event type, such as click or mouseover.
+- handler (function): The function to call when the specified event type has taken place on a matching element.
+
+##### Example
+
+	Eve.scope('#section-of-my-site', function() {
+
+	    this.listen('a', 'click', function() {
+	        console.log("You clicked on a link within my namespace!");
+	    });
+
+	});
+	
+#### attach
+
+Works exactly like Eve.attach, but will confine the attached module to the current scope.
+
+##### Example
+
+	Eve.register('myAwesomePlugin', function() {
+
+	    this.listen('a', 'click', function() {
+	        console.log("You clicked on a link within my namespace!");
+	    });
+
+	});
+
+	Eve.scope('#section-of-my-site', function() {
+
+	    //This will attach the named module to the namespace of
+	    //"#section-of-my-site .subsection".
+	    this.attach('myAwesomePlugin', '.subsection');
+
+	});
