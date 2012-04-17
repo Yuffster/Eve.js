@@ -113,7 +113,7 @@ window.Eve = {
 		var name = this.name,
 			sel	 = (this.namespace+' '+selector).trim(),
 			fun	 = function() {
-				Eve.dbug(name, sel);
+				Eve.dbug(name, sel+':'+event);
 				//Simple pass-through of scope and arguments.
 				handler.apply(this, arguments);
 			};
