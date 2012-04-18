@@ -68,7 +68,13 @@ window.Eve = {
 		return this;
 	},
 
-	bindToScope: function(fun, obj, reg, name) {	
+	bindToScope: function(fun, obj, reg, name) {
+		var defaults = {
+			listen: this.delegateScoped,
+			find: this.findFromScope,
+			attach: this.attachFromScope
+		};
+		for (var k in defaults) obj[k] = defaults[k];
 		if (window.YUI) {
 			YUI().use('node', function(Y) {
 				Eve.dom  = Y.one;
@@ -90,10 +96,7 @@ window.Eve = {
 		}
 		this.bindToScope(fun, {
 			name: ns,
-			namespace: ns,
-			listen: this.delegateScoped,
-			find: this.findFromScope,
-			attach: this.attachFromScope
+			namespace: ns
 		}, '__scopes', ns);
 	},
 
@@ -110,9 +113,6 @@ window.Eve = {
 		}
 		var mod = this.bindToScope(this.__registry[moduleName], {
 			namespace:namespace,
-			listen: this.delegateScoped,
-			find: this.findFromScope,
-			attach: this.attachFromScope,
 			name:moduleName
 		}, '__attachments', moduleName+namespace);
 		return true;
@@ -169,8 +169,7 @@ window.Eve = {
 	attachFromScope: function(moduleName, ns) {
 		Eve.attach(moduleName, this.namespace+' '+(ns||''));
 	},
-
-
+	
 	//This method is bound to the namespaced closure.
 	attachFromScope: function(moduleName, ns) {
 		Eve.attach(moduleName, this.namespace+' '+(ns||''));
