@@ -170,11 +170,6 @@ window.Eve = {
 		Eve.attach(moduleName, this.namespace+' '+(ns||''));
 	},
 	
-	//This method is bound to the namespaced closure.
-	attachFromScope: function(moduleName, ns) {
-		Eve.attach(moduleName, this.namespace+' '+(ns||''));
-	},
-	
 	findFromScope: function(sel) {
 		var scope;
 		sel = (sel || '').trim();
