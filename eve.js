@@ -170,7 +170,7 @@ window.Eve = {
 		//Scope to the particular instance of the DOM module active in this
 		//event.
 		if (this.event) {
-			var t = $(this.event.target)
+			var t = (window.$) ? $(this.event.target) : this.event.target;
 			if (window.jQuery) {
 				if (t.is(this.namespace)) return t;
 				scope = t.parents(this.namespace);
@@ -183,6 +183,10 @@ window.Eve = {
 				if (t.match(this.namespace)) return t;
 				scope = t.up(this.namespace);
 				return (sel) ? scope.select(sel) : scope;
+			} else if (window.YUI) {
+				if (t.test(this.namespace)) return t;
+				scope = t.ancestor(this.namespace);
+				return (sel) ? scope.all(sel) : scope;
 			}
 		//Scope to the DOM namespace across all instances.
 		} else if (this.namespace) {
@@ -191,7 +195,7 @@ window.Eve = {
 				return $(sel);
 			} else if (window.MooTools) {
 				return $$(sel);
-			} 
+			}
 		}
 	}
 
