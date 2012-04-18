@@ -144,8 +144,9 @@ window.Eve = {
 		} else if (window.Prototype) {
 			$(scope).on(event, sel, fun);
 		} else if (window.dojo) {
-			require(["dojo/on"], function(on){
+			require(["dojo/on", "dojo/NodeList-dom", "dojo/NodeList-traverse"], function(on, dom){
 				on(scope, sel+':'+event, fun);
+				Eve.dom = dom;
 			});
 		} else {
 			console.error("Eve doesn't support your JavaScript framework.");
@@ -183,6 +184,11 @@ window.Eve = {
 				if (t[match](this.namespace)) return t;
 				scope = t[up](this.namespace);
 				return (sel) ? scope[all](sel) : scope;
+			}
+			if (window.dojo) {
+				//Dojo returns the current node if it matches the selector.
+				scope = Eve.dom(t).closest(this.namespace);
+				return (sel) ? scope.query(sel) : scope;
 			}
 		//Scope to the DOM namespace across all instances.
 		} else if (this.namespace) {
