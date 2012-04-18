@@ -171,22 +171,18 @@ window.Eve = {
 		//event.
 		if (this.event) {
 			var t = (window.$) ? $(this.event.target) : this.event.target;
-			if (window.jQuery) {
-				if (t.is(this.namespace)) return t;
-				scope = t.parents(this.namespace);
-				return (sel) ? scope.find(sel) : scope;
-			} else if (window.MooTools) {
-				if (t.match(this.namespace)) return t;
-				scope = t.getParent(this.namespace);
-				return (sel) ? scope.getChildren(sel) : scope;
-			} else if (window.Prototype) {
-				if (t.match(this.namespace)) return t;
-				scope = t.up(this.namespace);
-				return (sel) ? scope.select(sel) : scope;
-			} else if (window.YUI) {
-				if (t.test(this.namespace)) return t;
-				scope = t.ancestor(this.namespace);
-				return (sel) ? scope.all(sel) : scope;
+			var map = {
+				jQuery: ['is', 'parents', 'find'],
+				MooTools: ['match', 'getParent', 'getChildren'],
+				Prototype: ['match', 'up', 'select'],
+				YUI: ['test', 'ancestor', 'all']
+			};
+			for (var fw in map) {
+				if (!window[fw]) continue;
+				var m = map[fw], match = m[0], up = m[1], all = m[2];
+				if (t[match](this.namespace)) return t;
+				scope = t[up](this.namespace);
+				return (sel) ? scope[all](sel) : scope;
 			}
 		//Scope to the DOM namespace across all instances.
 		} else if (this.namespace) {
