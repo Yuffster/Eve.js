@@ -35,7 +35,7 @@ window.Eve = {
 	__debugging: [],
 
 	__debugAll: false,
-	
+
 	dbug: function(name, message) {
 		if (!window.console) { return; }
 		var debug = this.__debugAll;
@@ -64,22 +64,37 @@ window.Eve = {
 		if (this.__registry[name]) {
 			throw new Error("Module already exists: "+name);
 		}
-		obj.prototype.del = this.delegateScoped;
 		this.__registry[name] = obj;
 		return this;
+	},
+
+	bindToScope: function(fun, obj, reg, name) {	
+		if (window.YUI) {
+			YUI().use('node', function(Y) {
+				Eve.dom  = Y.one;
+				Eve[reg][name] = fun.apply(obj);
+			});
+		} else if (window.dojo) {
+			require(["dojo/NodeList-dom", "dojo/NodeList-traverse"], function(dom){
+				Eve.dom  = dom;
+				Eve[reg][name] = fun.apply(obj);
+			});
+		} else {
+			Eve[reg][name] = fun.apply(obj);
+		}
 	},
 
 	scope: function(ns, fun) {
 		if (this.__scopes[ns]) {
 			console.warn("Duplicate namespace: "+ns);
 		}
-		this.__scopes[ns] = fun.apply({
+		this.bindToScope(fun, {
 			name: ns,
 			namespace: ns,
 			listen: this.delegateScoped,
 			find: this.findFromScope,
 			attach: this.attachFromScope
-		}, [ns]);
+		}, '__scopes', ns);
 	},
 
 	attach: function(moduleName, namespace) {
@@ -93,14 +108,13 @@ window.Eve = {
 			console.warn("Module not found: "+moduleName);
 			return false;
 		}
-		var mod = this.__registry[moduleName].apply({
+		var mod = this.bindToScope(this.__registry[moduleName], {
 			namespace:namespace,
 			listen: this.delegateScoped,
 			find: this.findFromScope,
 			attach: this.attachFromScope,
 			name:moduleName
-		}, [namespace]);
-		this.__attachments[moduleName+namespace] = mod;
+		}, '__attachments', moduleName+namespace);
 		return true;
 	},
 
@@ -115,11 +129,11 @@ window.Eve = {
 			selector = '';
 		}
 		selector = selector || '';
-		
+
 		//If listen is happening in the context of a triggered event handler,
 		//we only want to delegate to the current event namespace.
 		var scope = (this.event) ? this.find() : document.body;
-		
+
 		var name = this.name,
 			sel	 = (this.namespace+' '+selector).trim(),
 			obj  = { };
@@ -138,15 +152,12 @@ window.Eve = {
 			//I really hate the MooTools event delegation syntax.
 			$(scope).addEvent(event+':relay('+sel+')', fun);
 		} else if (window.YUI) {
-			YUI().use('node', function(Y) {
-				Y.one(scope).delegate(event, fun, sel);
-			});
+			Eve.dom(scope).delegate(event, fun, sel);
 		} else if (window.Prototype) {
 			$(scope).on(event, sel, fun);
 		} else if (window.dojo) {
-			require(["dojo/on", "dojo/NodeList-dom", "dojo/NodeList-traverse"], function(on, dom){
+			require(["dojo/on"], function(on){
 				on(scope, sel+':'+event, fun);
-				Eve.dom = dom;
 			});
 		} else {
 			console.error("Eve doesn't support your JavaScript framework.");
