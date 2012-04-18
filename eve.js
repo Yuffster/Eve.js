@@ -106,6 +106,7 @@ window.Eve = {
 
 	//This method is bound to the namespaced closure.
 	delegateScoped: function(selector, event, handler) {
+
 		//There's a special hell for putting optional parameters at the
 		//beginning.  A special and awesome hell.
 		if (!handler) {
@@ -114,6 +115,11 @@ window.Eve = {
 			selector = '';
 		}
 		selector = selector || '';
+		
+		//If listen is happening in the context of a triggered event handler,
+		//we only want to delegate to the current event namespace.
+		var scope = (this.event) ? this.find() : document.body;
+		
 		var name = this.name,
 			sel	 = (this.namespace+' '+selector).trim(),
 			obj  = { };
@@ -123,27 +129,35 @@ window.Eve = {
 				obj.event = e;
 				handler.apply(obj, arguments);
 			};
+
 		//JavaScript framework development is so much easier when you let some
 		//other framework do most of the work.
 		if (window.jQuery) {
-			$(window).delegate(sel, event, fun);
+			$(scope).delegate(sel, event, fun);
 		} else if (window.MooTools) {
 			//I really hate the MooTools event delegation syntax.
-			$(window).addEvent(event+':relay('+sel+')', fun);
+			$(scope).addEvent(event+':relay('+sel+')', fun);
 		} else if (window.YUI) {
 			YUI().use('node', function(Y) {
-				Y.one(document.body).delegate(event, fun, sel);
+				Y.one(scope).delegate(event, fun, sel);
 			});
 		} else if (window.Prototype) {
-			$(document.body).on(event, sel, fun);
+			$(scope).on(event, sel, fun);
 		} else if (window.dojo) {
 			require(["dojo/on"], function(on){
-				on(document, sel+':'+event, fun);
+				on(scope, sel+':'+event, fun);
 			});
 		} else {
 			console.error("Eve doesn't support your JavaScript framework.");
 		}
+
 	},
+
+	//This method is bound to the namespaced closure.
+	attachFromScope: function(moduleName, ns) {
+		Eve.attach(moduleName, this.namespace+' '+(ns||''));
+	},
+
 
 	//This method is bound to the namespaced closure.
 	attachFromScope: function(moduleName, ns) {
