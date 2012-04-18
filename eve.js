@@ -179,7 +179,7 @@ window.Eve = {
 			var t = (window.$) ? $(this.event.target) : this.event.target;
 			var map = {
 				jQuery: ['is', 'parents', 'find'],
-				MooTools: ['match', 'getParent', 'getChildren'],
+				MooTools: ['match', 'getParent', 'getElements'],
 				Prototype: ['match', 'up', 'select'],
 				YUI: ['test', 'ancestor', 'all']
 			};
