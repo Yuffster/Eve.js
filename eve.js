@@ -113,6 +113,7 @@ window.Eve = {
 			event = selector;
 			selector = '';
 		}
+		selector = selector || '';
 		var name = this.name,
 			sel	 = (this.namespace+' '+selector).trim(),
 			obj  = { };
@@ -151,7 +152,7 @@ window.Eve = {
 	
 	findFromScope: function(sel) {
 		var scope;
-		sel = (''+sel).trim();
+		sel = (sel || '').trim();
 		//Scope to the particular instance of the DOM module active in this
 		//event.
 		if (this.event) {
