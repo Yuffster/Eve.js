@@ -191,7 +191,7 @@ window.Eve = {
 				return (sel) ? scope.query(sel) : scope;
 			}
 		//Scope to the DOM namespace across all instances.
-		} else if (this.namespace) {
+		} else {
 			sel = this.namespace+' '+sel;
 			if (window.jQuery||window.Prototype) {
 				return $(sel);
