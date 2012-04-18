@@ -192,7 +192,7 @@ window.Eve = {
 			}
 		//Scope to the DOM namespace across all instances.
 		} else if (this.namespace) {
-			sel = this.namespace+sel;
+			sel = this.namespace+' '+sel;
 			if (window.jQuery||window.Prototype) {
 				return $(sel);
 			} else if (window.MooTools) {
