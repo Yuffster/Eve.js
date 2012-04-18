@@ -161,7 +161,7 @@ window.Eve = {
 				scope = t.parents(this.namespace);
 				return (sel) ? scope.find(sel) : scope;
 			} else if (window.MooTools) {
-				if (t.matches(this.namespace)) return t;
+				if (t.match(this.namespace)) return t;
 				scope = t.getParent(this.namespace);
 				return (sel) ? scope.getChildren(sel) : scope;
 			} else if (window.Prototype) {
