@@ -138,9 +138,10 @@ window.Eve = {
 			sel	 = (this.namespace+' '+selector).trim(),
 			obj  = { };
 			for (k in this) if (this.hasOwnProperty(k))	obj[k] = this[k];
-			function fun(e) {
+			function fun(e,t) {
 				Eve.dbug(name, sel+':'+event);
 				obj.event = e;
+				if (window.MooTools) { e.target = t; }
 				handler.apply(obj, arguments);
 			};
 
