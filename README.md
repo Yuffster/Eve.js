@@ -75,13 +75,13 @@ Eve.scope(namespace, function);
 
 ##### Example
 
-Eve.scope('.hello-world', function() {
+	Eve.scope('.hello-world', function() {
 
-    this.listen('div.line', 'click', function(e) {
-        console.log("You clicked on .hello-world div.line");
-    });
+	    this.listen('div.line', 'click', function(e) {
+	        console.log("You clicked on .hello-world div.line");
+	    });
 
-});
+	});
 
 #### Eve.register
 
@@ -158,3 +158,82 @@ Eve.debug([moduleName]);
 ##### Example
 
 	Eve.debug('myAwesomeModule');
+
+### Scoped Methods
+
+Eve attaches two methods to each scoped function attached via Eve.scope or Eve.register. When calling these methods from within the function, you'll automatically remain within the scoped namespace.
+
+#### listen
+
+Begins watching for events which match the particular eventType and CSS selector, as long as the given CSS selector is part of the parent namespace.
+
+##### Syntax
+
+this.listen([selector,] eventType, handler);
+
+##### Arguments
+
+- selector (string, optional): The CSS selector of the elements you want to attach events to. If no selector is given, any event of the given type within the scoped namespace will invoke the handler.
+- eventType (string): The event type, such as click or mouseover.
+- handler (function): The function to call when the specified event type has taken place on a matching element.
+
+##### Example
+
+	Eve.scope('#section-of-my-site', function() {
+
+	    this.listen('a', 'click', function() {
+	        console.log("You clicked on a link within my namespace!");
+	    });
+
+	});
+	
+#### attach
+
+Works exactly like Eve.attach, but will confine the attached module to the current scope.
+
+##### Example
+
+	Eve.register('myAwesomePlugin', function() {
+
+	    this.listen('a', 'click', function() {
+	        console.log("You clicked on a link within my namespace!");
+	    });
+
+	});
+
+	Eve.scope('#section-of-my-site', function() {
+
+	    //This will attach the named module to the namespace of
+	    //"#section-of-my-site .subsection".
+	    this.attach('myAwesomePlugin', '.subsection');
+
+	});
+
+#### find
+
+Finds elements from within the context of the current scoped instance. If called from a scope, find will return all elements matching the given selector within the parent namespace.  If called from an event (listen) handler, only elements within the same instance of the parent scope from which the event has been called will be returned.
+
+##### Syntax
+
+this.find(selector);
+
+##### Arguments
+
+- selector (string): A CSS selector.
+
+##### Example
+
+	Eve.scope('.image-slideshow', function() {
+
+		//Will return all .image-slideshow img items.
+		this.find('img');
+		
+	    this.listen('a', 'click', function() {
+		
+			// Only returns img.active items within the current
+			// .image-slideshow element.
+	        this.find('img.active');
+	
+	    });
+
+	});

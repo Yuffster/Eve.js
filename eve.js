@@ -1,7 +1,7 @@
 /**
- * Eve.js <evejs.com> - Version: 0.2 (April 15, 2012)
+ * Eve.js <evejs.com> - Version: 0.4 (April 19, 2012)
  *
- *     A JavaScript meta-framework for scoped event delegation.
+ *	   A JavaScript meta-framework for scoped event delegation.
  * 
  * Copyright (c) 2012 Michelle Steigerwalt, http://evejs.com/
  * 
@@ -24,123 +24,188 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-var Eve = {
+window.Eve = {
 
-    __registry: {},
+	__registry: {},
 
-    __scopes: {},
+	__scopes: {},
 
-    __attachments: {},
+	__attachments: {},
 
-    __debugging: [],
+	__debugging: [],
 
-    __debugAll: false,
-    
-    dbug: function(name, message) {
-        var debug = this.__debugAll;
-        if (!this.__debugAll) {
-            debug = false;
-            for (var i = 0; i<this.__debugging.length; i++) {
-                if (this.__debugging[i]==name) debug = true;
-            }
-        }
-        if (!debug) { return; }
-        while (name.length<10) { name=name+' '; }
-        name = name.substring(0, 10)+" - ";
-        console.info(name, message);
-    },
+	__debugAll: false,
 
-    debug: function(moduleName) {
-        if (moduleName) {
-            this.__debugging.push(moduleName);
-        } else {
-            this.__debugAll = true;
-        }
-    },
+	dbug: function(name, message) {
+		if (!window.console) { return; }
+		var debug = this.__debugAll;
+		if (!this.__debugAll) {
+			debug = false;
+			for (var i = 0; i<this.__debugging.length; i++) {
+				if (this.__debugging[i]==name) debug = true;
+			}
+		}
+		if (!debug) { return; }
+		while (name.length<10) { name=name+' '; }
+		name = name.substring(0, 10)+" - ";
+		console.info(name, message);
+	},
 
-    register: function(name, obj) {
-        this.dbug(name, "registered");
-        if (this.__registry[name]) {
+	debug: function(moduleName) {
+		if (moduleName) {
+			this.__debugging.push(moduleName);
+		} else {
+			this.__debugAll = true;
+		}
+	},
+
+	register: function(name, obj) {
+		this.dbug(name, "registered");
+		if (this.__registry[name]) {
 			throw new Error("Module already exists: "+name);
 		}
-        obj.prototype.del = this.delegateScoped;
-        this.__registry[name] = obj;
-        return this;
-    },
+		this.__registry[name] = obj;
+		return this;
+	},
 
-    scope: function(ns, fun) {
-        if (this.__scopes[ns]) {
-            console.warn("Duplicate namespace: "+ns);
-        }
-        this.__scopes[ns] = fun.apply({
-            name: ns,
-            namespace: ns,
-            listen: this.delegateScoped,
-            attach: this.attachFromScope
-        }, [ns]);
-    },
+	bindToScope: function(fun, obj, reg, name) {
+		var defaults = {
+			listen: this.delegateScoped,
+			find: this.findFromScope,
+			attach: this.attachFromScope
+		};
+		for (var k in defaults) obj[k] = defaults[k];
+		if (window.YUI) {
+			YUI().use('node', function(Y) {
+				Eve.dom  = Y.one;
+				Eve[reg][name] = fun.apply(obj);
+			});
+		} else if (window.dojo) {
+			require(["dojo/NodeList-dom", "dojo/NodeList-traverse"], function(dom){
+				Eve.dom  = dom;
+				Eve[reg][name] = fun.apply(obj);
+			});
+		} else {
+			Eve[reg][name] = fun.apply(obj);
+		}
+	},
 
-    attach: function(moduleName, namespace) {
-        this.dbug(moduleName, "attached to "+namespace);
-        //We're delegating off the window, so there's no need to reattach for
-        //multiple instances of a single given module.
-        if (this.__attachments[moduleName+namespace]) {
-            return false;
-        }
-        if (!this.__registry[moduleName]) {
-            console.warn("Module not found: "+moduleName);
-            return false;
-        }
-        var mod = this.__registry[moduleName].apply({
-            namespace:namespace,
-            listen:this.delegateScoped,
-            name:moduleName
-        }, [namespace]);
-        this.__attachments[moduleName+namespace] = mod;
-        return true;
-    },
+	scope: function(ns, fun) {
+		if (this.__scopes[ns]) {
+			console.warn("Duplicate namespace: "+ns);
+		}
+		this.bindToScope(fun, {
+			name: ns,
+			namespace: ns
+		}, '__scopes', ns);
+	},
 
-    //This method is bound to the namespaced closure.
-    delegateScoped: function(selector, event, handler) {
-        //There's a special hell for putting optional parameters at the
-        //beginning.  A special and awesome hell.
-        if (!handler) {
-            handler = event;
-            event = selector;
-            selector = '';
-        }
-        var name = this.name,
-            sel  = (this.namespace+' '+selector).trim(),
-            fun  = function() {
-                Eve.dbug(name, sel);
-                //Simple pass-through of scope and arguments.
-                handler.apply(this, arguments);
-            };
-        //JavaScript framework development is so much easier when you let some
-        //other framework do most of the work.
-        if (window.jQuery) {
-            $(window).delegate(sel, event, fun);
-        } else if (window.MooTools) {
-            //I really hate the MooTools event delegation syntax.
-            $(window).addEvent(event+':relay('+sel+')', fun);
-        } else if (window.YUI) {
-            YUI().use('node', function(Y) {
-                Y.one(document.body).delegate(event, fun, sel);
-            });
-        } else if (window.Prototype) {
-            $(document.body).on(event, sel, fun);
-        } else if (window.dojo) {
-            require(["dojo/on"], function(on){
-                on(document, sel+':'+event, fun);
-            });
-        } else {
-            console.error("Eve doesn't support your JavaScript framework.");
-        }
-    },
+	attach: function(moduleName, namespace) {
+		this.dbug(moduleName, "attached to "+namespace);
+		//We're delegating off the window, so there's no need to reattach for
+		//multiple instances of a single given module.
+		if (this.__attachments[moduleName+namespace]) {
+			return false;
+		}
+		if (!this.__registry[moduleName]) {
+			console.warn("Module not found: "+moduleName);
+			return false;
+		}
+		var mod = this.bindToScope(this.__registry[moduleName], {
+			namespace:namespace,
+			name:moduleName
+		}, '__attachments', moduleName+namespace);
+		return true;
+	},
 
-    //This method is bound to the namespaced closure.
-    attachFromScope: function(moduleName, ns) {
-        Eve.attach(moduleName, this.namespace+' '+(ns||''));
-    }
+	//This method is bound to the namespaced closure.
+	delegateScoped: function(selector, event, handler) {
+
+		//There's a special hell for putting optional parameters at the
+		//beginning.  A special and awesome hell.
+		if (!handler) {
+			handler = event;
+			event = selector;
+			selector = '';
+		}
+		selector = selector || '';
+
+		//If listen is happening in the context of a triggered event handler,
+		//we only want to delegate to the current event namespace.
+		var scope = (this.event) ? this.find() : document.body;
+
+		var name = this.name,
+			sel	 = (this.namespace+' '+selector).trim(),
+			obj  = { };
+			for (k in this) if (this.hasOwnProperty(k))	obj[k] = this[k];
+			function fun(e,t) {
+				Eve.dbug(name, sel+':'+event);
+				obj.event = e;
+				if (window.MooTools) { e.target = t; }
+				if (window.jQuery)   { e.target = e.currentTarget; }
+				handler.apply(obj, arguments);
+			};
+
+		//JavaScript framework development is so much easier when you let some
+		//other framework do most of the work.
+		if (window.jQuery) {
+			$(scope).delegate(sel, event, fun);
+		} else if (window.MooTools) {
+			//I really hate the MooTools event delegation syntax.
+			$(scope).addEvent(event+':relay('+sel+')', fun);
+		} else if (window.YUI) {
+			Eve.dom(scope).delegate(event, fun, sel);
+		} else if (window.Prototype) {
+			$(scope).on(event, sel, fun);
+		} else if (window.dojo) {
+			require(["dojo/on"], function(on){
+				on(scope, sel+':'+event, fun);
+			});
+		} else {
+			console.error("Eve doesn't support your JavaScript framework.");
+		}
+
+	},
+
+	//This method is bound to the namespaced closure.
+	attachFromScope: function(moduleName, ns) {
+		Eve.attach(moduleName, this.namespace+' '+(ns||''));
+	},
+	
+	findFromScope: function(sel) {
+		var scope;
+		if (!sel || typeof(sel)=='string') { sel = (sel || '').trim(); }
+		//Scope to the particular instance of the DOM module active in this
+		//event.
+		if (this.event) {
+			var t = (window.$) ? $(this.event.target) : this.event.target;
+			var map = {
+				jQuery: ['is', 'parents', 'find'],
+				MooTools: ['match', 'getParent', 'getElements'],
+				Prototype: ['match', 'up', 'select'],
+				YUI: ['test', 'ancestor', 'all']
+			};
+			for (var fw in map) {
+				if (!window[fw]) continue;
+				var m = map[fw], match = m[0], up = m[1], all = m[2];
+				if (t[match](this.namespace)) return t;
+				scope = t[up](this.namespace);
+				return (sel) ? scope[all](sel) : scope;
+			}
+			if (window.dojo) {
+				//Dojo returns the current node if it matches the selector.
+				scope = Eve.dom(t).closest(this.namespace);
+				return (sel) ? scope.query(sel) : scope;
+			}
+		//Scope to the DOM namespace across all instances.
+		} else {
+			sel = this.namespace+' '+sel;
+			if (window.jQuery||window.Prototype) {
+				return $(sel);
+			} else if (window.MooTools) {
+				return $$(sel);
+			}
+		}
+	}
 
 };
