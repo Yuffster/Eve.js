@@ -174,7 +174,7 @@ window.Eve = {
 	
 	findFromScope: function(sel) {
 		var scope;
-		sel = (sel || '').trim();
+		if (!sel || typeof(sel)=='string') { sel = (sel || '').trim(); }
 		//Scope to the particular instance of the DOM module active in this
 		//event.
 		if (this.event) {
