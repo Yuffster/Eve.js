@@ -142,6 +142,7 @@ window.Eve = {
 				Eve.dbug(name, sel+':'+event);
 				obj.event = e;
 				if (window.MooTools) { e.target = t; }
+				if (window.jQuery)   { e.target = e.currentTarget; }
 				handler.apply(obj, arguments);
 			};
 
