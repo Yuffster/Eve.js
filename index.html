@@ -78,16 +78,16 @@
 				<h2>Backwards Compatibility</h2>
 				
 				<p>
-					Eve.js is fully compatible with all legacy
-					JavaScript applications, meaning there's no need to 
+					Eve.js is fully compatible with <em>all legacy
+					JavaScript applications</em>, meaning there's no need to 
 					rewrite a single line of code to get
 					started.  
 				</p>
 				
 				<p>
-					Since it works on top of your existing framework library,
-					you'll be able to continue to write code the way you're
-					used to, just less of it!
+					Since it <em>works on top of your existing framework 
+					library</em>, you'll be able to continue to write code
+					the way you're used to, just less of it!
 				</p>
 				
 				<h2>Painless Maintenance</h2>
@@ -97,18 +97,11 @@
 					you time and money.
 				</p>
 				
-				<p> Eve makes it easy to make sure the code you're writing
-					won't
-					cause strange things to happen in unrelated sections,
-					which means you'll be saving less time on surprise
-					bugs.
-				</p> 
-				
 				<h2>Omniscient Debugging</h2>
 				
 				<p>
-					By enabling Eve's debug mode, you'll receive a real-time
-					log of all events as they're being triggered, along with
+					By enabling Eve's debug mode, you'll receive a <em>real-time
+					log</em> of all events as they're being triggered, along with
 					the name of the module in effect.
 				</p>
 				
@@ -116,17 +109,23 @@
 				
 				<p>
 					Because Eve.js takes the hassle out of organizing and
-					managing complex applications, it's possible to dramatically
-					reduce the amount of code necessary to implement new
+					managing complex applications, it's possible to 
+					<em>dramatically
+					reduce</em> the amount of code necessary to implement new
 					features.
 				</p>
 				
 				<h2>Minimalist</h2>
 				
 				<p>
-					Eve.js is very small: less than 5kb uncompressed.
+					Eve.js weighs in at <em>less than 3KB</em> when 
+					properly compressed, making load time negligible.
+				</p>
+				
+				<p>
+					Additionally, a small codebase means a small API.
 					With only a handful of simple methods to learn, you can
-					master it in less than an hour.
+					master Eve in less than an hour.
 				</p>
 				
 				<h2>Automatic Event Delegation</h2>
@@ -150,9 +149,9 @@
 					project.
 				</p>
 				<p>
-					Since Eve works with all major frameworks, you'll be able
-					to keep using it no matter what your next environment
-					might be like.
+					Since Eve <em>works with all major frameworks</em>, you'll
+					be able to keep using it no matter what your next
+					environment might be like.
 				</p>
 				
 			</div>
@@ -213,9 +212,9 @@
 			
 			<div class="content">
 				
-				<h2>Global Methods</h2>
+	<h2>Global Methods</h2>
 				
-				<h3>Eve.scope</h3>
+			<h3>Eve.scope</h3>
 				
 				<p>
 					Scopes the given function to a particular CSS namespace.
@@ -226,13 +225,13 @@
 					namespace.
 				</p>
 				
-				<h4>Syntax</h4>
+			<h4>Syntax</h4>
 				
 				<p class="syntax">
 					Eve.scope(<code>namespace</code>, <code>function</code>);
 				</p>
 				
-				<h4>Arguments</h4>
+			<h4>Arguments</h4>
 				
 				<ul class="arguments">
 					<li>
@@ -248,11 +247,11 @@
 
 				</ul>
 				
-				<h4>Example</h4>
+			<h4>Example</h4>
 				
 				<script src="https://gist.github.com/2388452.js?file=eve-hello-world.js"></script>
 				
-				<h3>Eve.register</h3>
+		<h3>Eve.register</h3>
 				
 				<p>
 					Allows you to register a reusable module which can then
@@ -262,13 +261,13 @@
 					attaching.
 				</p>
 				
-				<h4>Syntax</h4>
+			<h4>Syntax</h4>
 				
 				<p class="syntax">
 					Eve.register(<code>moduleName</code>, <code>function</code>);
 				</p>
 				
-				<h4>Arguments</h4>
+			<h4>Arguments</h4>
 				
 				<ul class="arguments">
 					<li>
@@ -285,24 +284,24 @@
 
 				</ul>
 				
-				<h4>Example</h4>
+			<h4>Example</h4>
 				
 				<script src="https://gist.github.com/2389413.js?file=eve-register.js"></script>
 				
-				<h3>Eve.attach</h3>
+		<h3>Eve.attach</h3>
 				
 				<p>
 					Attaches a previously registered module to the specified
 					CSS namespace.
 				</p>
 				
-				<h4>Syntax</h4>
+			<h4>Syntax</h4>
 				
 				<p class="syntax">
 					Eve.attach(moduleName, namespace);
 				</p>
 				
-				<h4>Arguments</h4>
+			<h4>Arguments</h4>
 				
 				<ul class="arguments">
 					<li>
@@ -317,24 +316,24 @@
 					</li>
 				</ul>
 				
-				<h4>Example</h4>
+			<h4>Example</h4>
 				
 				<script src="https://gist.github.com/2389510.js?file=eve-attach.js"></script>
 				
-				<h3>Eve.debug</h3>
+		<h3>Eve.debug</h3>
 				
 				<p>
 					Logs detailed information concerning event execution
 					and responsible modules to to the console.
 				</p>
 				
-				<h4>Syntax</h4>
+			<h4>Syntax</h4>
 				
 				<p class="syntax">
 					Eve.debug([<code>moduleName</code>]);
 				</p>
 				
-				<h4>Arguments</h4>
+			<h4>Arguments</h4>
 				
 				<ul class="arguments">
 					<li>
@@ -345,11 +344,11 @@
 					</li>
 				</ul>
 				
-				<h4>Example</h4>
+			<h4>Example</h4>
 				
 				<script src="https://gist.github.com/2389482.js?file=eve-debug.js"></script>
 				
-				<h2>Scoped Methods</h2>
+	<h2>Scoped Methods</h2>
 				
 				<p>
 					Eve attaches two methods to each scoped function attached
@@ -359,7 +358,7 @@
 					namespace.
 				</p>
 				
-				<h3>listen</h3>
+		<h3>listen</h3>
 				
 				<p>
 					Begins watching for events which match the particular
@@ -367,13 +366,13 @@
 					selector is part of the parent namespace.
 				</p>
 				
-				<h4>Syntax</h4>
+			<h4>Syntax</h4>
 				
 				<p class="syntax">
 					this.listen([<code>selector</code>,] <code>eventType</code>, <code>handler</code>);
 				</p>
 				
-				<h4>Arguments</h4>
+			<h4>Arguments</h4>
 				
 				<ul class="arguments">
 					<li>
@@ -393,11 +392,43 @@
 					</li>
 				</ul>
 				
-				<h4>Example</h4>
+			<h4>Example</h4>
 				
 				<script src="https://gist.github.com/2389442.js?file=eve-scoped-attach.js"></script>
 				
-				<h3>attach</h3>
+		<h3>listen</h3>
+				
+				<p>
+					Finds elements from within the context of the current
+					scoped instance. If called from a scope, find will return
+					all elements matching the given selector within the parent
+					 namespace. If called from an event (listen) handler, only
+					 elements within the same instance of the parent scope
+					from which the event has been called will be returned.
+				</p>
+				
+			<h4>Syntax</h4>
+				
+				<p class="syntax">
+					this.find(<code>selector</code>);
+				</p>
+				
+			<h4>Arguments</h4>
+				
+				<ul class="arguments">
+					<li>
+						<code>selector</code> (string): A CSS selector.  If no
+						selector is provided, the parent namespace will be
+						returned.
+					</li>
+				</ul>
+				
+				<h4>Example</h4>
+				
+				<script src="https://gist.github.com/2426170.js?file=eve_find.js"></script>
+				
+				
+		<h3>attach</h3>
 				
 				<p>
 					Works exactly like <code>Eve.attach</code>, but will 
@@ -405,7 +436,7 @@
 				</p>
 				
 				
-				<h4>Example</h4>
+			<h4>Example</h4>
 				
 				<script src="https://gist.github.com/2389442.js?file=gistfile1.txt"></script>
 				

@@ -347,7 +347,7 @@ section p {
 	line-height: 125%;
 }
 
-section code {
+section code,section em {
 	color: #fff;
 	text-shadow: 1px 1px 1px #000;
 }
