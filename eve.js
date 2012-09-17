@@ -31,6 +31,8 @@ window.Eve = {
 	__scopes: {},
 
 	__attachments: {},
+	
+	__extensions: {},
 
 	__debugging: [],
 
@@ -67,6 +69,10 @@ window.Eve = {
 		this.__registry[name] = obj;
 		return this;
 	},
+	
+	extend: function(key, fun) {
+		this.__extensions[key] = fun;
+	},
 
 	bindToScope: function(fun, obj, reg, name) {
 		var defaults = {
@@ -74,7 +80,10 @@ window.Eve = {
 			find: this.findFromScope,
 			attach: this.attachFromScope
 		};
+		
 		for (var k in defaults) obj[k] = defaults[k];
+		for (var k in this.__extensions) obj[k] = this.__extensions[k];
+		
 		if (window.YUI) {
 			YUI().use('node', function(Y) {
 				Eve.dom  = Y.one;

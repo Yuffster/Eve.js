@@ -129,4 +129,31 @@
 		ok(el1.className=='active', "Clicked module one element is still active.");
 	});
 	
+	test("Should allow for extending Eve.js with additional scoped methods", function() {
+		
+		Eve.extend('handle', function(key, e, fun) {
+			this.listen('[data-action='+key+']', e, fun);
+		});
+		
+		Eve.scope('.extended-area', function() {
+			
+			this.handle('bing', 'click', function(e) {
+				e.target.innerHTML = 'Bing';
+			});
+			
+		});
+		
+		var bing  = document.getElementById('bing-target'), 
+		    bing2 = document.getElementById('bing-target2');
+		
+		simulate(bing, 'click');
+		
+		ok(bing.innerHTML == 'Bing', 'Event handled correctly.');
+		
+		simulate(bing2, 'click');
+		
+		ok(bing2.innerHTML == 'Ping', "Extended namespace doesn't leak past its namespace.");
+		
+	});
+	
 })();
