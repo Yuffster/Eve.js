@@ -4,7 +4,7 @@
 	// http://stackoverflow.com/questions/6157929/#answer-6158050
 	function simulate(element, eventName, options)
 	{
-		if (typeOf(element)==='string') {
+		if (typeof(element)==='string') {
 			element = document.getElementById(element);
 		}
 		
@@ -147,6 +147,7 @@
 		    bing2 = simulate('bing-target2', 'click');
 
 		ok(bing.innerHTML  == 'Bing', 'Event handled correctly.');
+		console.log(bing2.innerHTML);
 		ok(bing2.innerHTML == 'Ping', "Extended namespace doesn't leak past its namespace.");
 		
 	});
