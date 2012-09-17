@@ -156,6 +156,11 @@ i {
 	text-align:center;
 }
 
+#top .github-cta .status {
+	margin-top:5px;
+	text-align:center;
+}
+
 #top .github-cta .btn {
 	font-size:18px;
 	background-color: hsl(202, 53%, 18%) !important;
