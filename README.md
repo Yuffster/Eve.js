@@ -1,6 +1,6 @@
 # Eve.JS
 
-[![Build Status](https://secure.travis-ci.org/Yuffster/Eve.js.png)](http://travis-ci.org/[Yuffster]/[Eve.js.png])
+[![Build Status](https://secure.travis-ci.org/Yuffster/Eve.js.png)](http://travis-ci.org/Yuffster/Eve.js.png)
 
 The featherweight JavaScript meta-framework which hooks into any major JavaScript library to make scoped event delegation and modular encapsulation automatic and painless.
 
