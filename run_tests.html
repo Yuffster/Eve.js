@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Eve.JS Test Runner</title>
+</head>
+<body>
+
+	<style type="text/css">
+		#tabs {
+			text-align:center;
+		}
+		#tabs a {
+			color: white;
+		}
+		#tabs span.label {
+			font-family:Helvetica,Arial,sans-serif;
+			font-size:18px;
+			color: #fff;
+			text-shadow: 1px 1px 0 #000000;
+		}
+		#framework-select {
+			display: inline-block;
+		}
+		#framework-select li {
+			display:inline-block;
+			padding:0 15px;
+		}
+		#framework-select li.active a {
+			text-decoration:none;
+			font-weight:bold;
+			color: #FFFFFF;
+			text-shadow: 1px 1px 0 #000000;
+			cursor: default;
+		}
+		#framework-select li a.passed {
+			color:#DEFFDA;
+		}
+		#framework-select li a.failed {
+			color:#FFDADA;
+		}
+		#framework-select li a {
+			font-size:24px;
+			font-family:sans-serif;
+			color: #DAEAFF;
+			text-decoration:none;
+		}
+		body {
+			background: #1E5799;
+		}
+		body #qunit-fixture {
+			display:none;
+		}
+		body #results {
+			display:none;
+		}
+		body.tests-finished #results {
+			background: none repeat scroll 0 0 #000000;
+			color: #CCCCCC;
+			font-family: Monaco,monospace;
+			padding: 10px;
+			width: 80%;
+			margin: auto;
+			display:block;
+			border-radius:5px;
+		}
+		#qunit {
+			width:80%;
+			margin: auto;
+		}
+		#results h2 {
+			padding:0;
+			margin:0;
+			font-weight:normal;
+			font-size: 30px;
+			font-family: Monaco,monospace;
+		}
+		#results ul {
+			list-style:none;
+			font-size: 18px;
+		}
+		#results ul a,#results ul a:visited {
+			display:inline-block;
+			width:150px;
+			color: #DAEAFF;
+		}
+		#results ul a,#results ul a:visited {
+			display:inline-block;
+			width:150px;
+			color: #DAEAFF;
+		}
+		#results ul li .label {
+			text-transform: uppercase;
+		}
+		#results ul li.fail .label {
+			color:red;
+		}
+		#results ul li.pass .label {
+			color: #00FF22;
+		}
+		#results .prompt {
+			color:#777;
+		}
+		#results .plug-modal {
+			color: #fff;
+			font-size:24px;
+		}
+		#results .plug-modal .mode {
+			display:none;
+		}
+		#results.passed .plug-modal .hurray {
+			display:inline;
+		}
+		#results.failed .plug-modal .ohnoes {
+			display:inline;
+		}
+		#results .ohnoes a,#results .ohnoes a:visited {
+			color:red;
+		}
+		#results .hurray {
+			color: #fff;
+		}
+		#results .hurray a {
+			text-decoration:none;
+			color: #DCBC45;
+		}
+		#results .heart {
+			color: #FFD1E8;
+		}
+		#status-template {
+			display:none;
+		}
+	</style>
+	
+	
+	<div id="tabs">
+		<ul id="framework-select">
+			<li id="fw-jquery"><a href="?runner=jquery">jQuery</a></li>
+			<li id="fw-mootools"><a href="?runner=mootools">MooTools</a></li>
+			<li id="fw-yui"><a href="?runner=yui">YUI</a></li>
+			<li id="fw-prototype"><a href="?runner=prototype">Prototype</a></li>
+			<li id="fw-dojo"><a href="?runner=dojo">Dojo</a></li>
+		</ul>
+		<a id="run-all" href="?">autorun</a>
+	</div>
+	
+	<div id="qunit"></div>
+	
+	<div id="results">
+		<h2>All tests complete<blink>:</blink></h2>
+		<ul id="results-list">
+			<li id="status-template" class="{{status}}">
+				<a>{{name}}</a>:
+				<span class="points">{{passes}}/{{total}}</span>
+				[<span class="label">{{status}}</span>]
+			</li>
+		</ul>
+		<div class="plug-modal">
+			<span class="prompt">&gt;</span> 
+			<span class="mode hurray">
+				Thanks for using <a href="http://evejs.com">Eve.js</a>! <span class="heart">&#x2764;</span>
+			</span>
+			<span class="mode ohnoes">
+				Oh no, a bug!  Would you like to <a href="https://github.com/Yuffster/Eve.js/issues/new">report it</a>?
+			</span>
+		</div>
+	</div>
+	
+	<div id="qunit-fixture">
+		<div class="list-module" id="m1">
+
+			This is list module one.
+	
+			<div class="child_area">
+	  
+				<ul>
+					<li id="m1-1">Link One</li>
+					<li id="m1-2">Link Two</li>
+					<li id="m1-3">Link Three</li>
+				</ul>
+		  
+		   </div>
+
+		</div>
+
+		<hr/>
+
+		<div class="list-module" id="m2">
+
+			This is list module two.
+	
+			<div class="child_area">
+	  
+				<ul>
+					<li id="m2-1">Link Four</li>
+					<li id="m2-2">Link Five</li>
+					<li id="m2-3">Link Six</li>
+				</ul>
+
+		   </div>
+
+		</div>
+
+		<hr/>
+
+		<div class="other-module" id="m3">
+
+			This is a different module.
+	
+			<div class="child_area">
+	  
+				<ul id="m3-ul">
+					<li id="m3-1">Link One</li>
+					<li id="m3-2">Link Two</li>
+					<li id="m3-3">Link Three</li>
+				</ul>
+		  
+		   </div>
+
+		</div>
+	</div>
+	
+	<script type="text/javascript" src="tests/test_client.js"></script>
+	
+</body>
+</html>
