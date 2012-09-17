@@ -1,10 +1,25 @@
 # Eve.JS
 
+[![Build Status](https://secure.travis-ci.org/Yuffster/Eve.js.png)](http://travis-ci.org/Yuffster/Eve.js)
+
 The featherweight JavaScript meta-framework which hooks into any major JavaScript library to make scoped event delegation and modular encapsulation automatic and painless.
 
 <http://evejs.com>
 
+## Installation
+
+Eve.js only has one runtime file: `eve.js`.  The rest of this repository contains support files and tests.
+
+You can access the latest stable version of this file from <http://evejs.com/stable/eve.js>.
+
+## Testing
+
+To run the complete test suite, point your browser locally to the `run_tests.html` file.  This will run
+a full barrage of tests for each supported framework in its own isolated environment.
+
 ## Examples 
+
+An example file for each supported framework has been provided in the examples directory.
 
 ### Scoping
 
