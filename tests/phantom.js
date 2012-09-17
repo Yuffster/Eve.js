@@ -12,7 +12,7 @@ function wait(con, fun, max) {
 
 var page = new WebPage();
 
-page.open(require('fs').workingDirectory+"/run_tests.html", function(status){
+page.open(require('fs').workingDirectory+"/run_tests.html?auto=on", function(status){
     if (status !== "success") {
         console.log("Unable to access network");
         phantom.exit();

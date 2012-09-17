@@ -132,7 +132,37 @@ Eve.register(moduleName, function);
 	//effectively attaching events to "#section-of-my-site" and
 	//"#section-of-my-site a".
 	Eve.attach('myAwesomePlugin', '#section-of-site');
+
+#### Eve.extend
+
+Provides a method of extending Eve.js's native scoped methods with custom ones.
+
+##### Syntax
+
+Eve.extend(methodName, function);
+
+##### Arguments
+
+- methodName (string): The name of the new Eve.js scoped method.
+- function (function): The function to be executed when the new scoped method is called.
+
+##### Example
+
+	Eve.extend('handle', function(key, e, fun) {
+		//this.listen will be limited to the scope of the code which called
+		//the handle method.
+		this.listen('[data-action='+key+']', e, fun);
+	});
+
+	Eve.scope('.extended-area', function() {
 	
+		//Handle is now available within this scope.
+		this.handle('bing', 'click', function(e) {
+			e.target.innerHTML = 'Bing';
+		});
+	
+	});
+
 #### Eve.attach
 
 Attaches a previously registered module to the specified CSS namespace.

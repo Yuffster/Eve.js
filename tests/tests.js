@@ -4,6 +4,10 @@
 	// http://stackoverflow.com/questions/6157929/#answer-6158050
 	function simulate(element, eventName, options)
 	{
+		if (typeof(element)==='string') {
+			element = document.getElementById(element);
+		}
+		
 		options = options || {};
 		
 		var eventMatchers = {
@@ -82,10 +86,9 @@
 	});
 	
 	test("Should scope .find to a CSS namespace.", function() {
-		var oconsole = console.log, output,
-		    el = document.getElementById('m3-ul');
+		var oconsole = console.log, output;
 		console.log = function(m) { output=m; }
-		simulate(el, 'click');
+		simulate('m3-ul', 'click');
 		console.log = oconsole;
 		ok(output=="Inner module click!", "Click event recognized.");
 	});
@@ -111,8 +114,7 @@
 		var i,id,el,active;
 		for (i=1;i<=3;i++) {
 			id = 'm1-'+i;
-			el = document.getElementById(id);
-			simulate(el, 'click');
+			el = simulate(id, 'click');
 			active = document.getElementById('m1').getElementsByClassName('active');
 			ok(active.length==1, "Only one active child element.");
 			ok(active[0].id == id, "Active element has the correct ID.");
@@ -120,13 +122,35 @@
 	});
 	
 	test("Should scope listener .find to event namespace.", function() {
-		var el1 = document.getElementById('m1-1'),
-		    el2 = document.getElementById('m2-1');
-		simulate(el1, 'click');
+		var el1 = simulate('m1-1', 'click'),
+		    el2 = simulate('m2-1', 'click');
 		ok(el1.className=='active', "Clicked module one element is active.");
-		simulate(el2, 'click');
 		ok(el2.className=='active', "Clicked module two element is active.");
 		ok(el1.className=='active', "Clicked module one element is still active.");
+	});
+	
+	test("Should allow for extending Eve.js with additional scoped methods", function() {
+		
+		Eve.extend('handle', function(key, e, fun) {
+			this.listen('[data-action='+key+']', e, fun);
+		});
+		
+		Eve.scope('.extended-area', function() {
+			
+			this.handle('bing', 'click', function(e) {
+				e.target.innerHTML = 'Bing';
+				if (e.target.setHTML) e.target.setHTML('Bing');
+			});
+			
+		});
+		
+		var bing  = simulate('bing-target', 'click'), 
+		    bing2 = simulate('bing-target2', 'click');
+
+		ok(bing.innerHTML  == 'Bing', 'Event handled correctly.');
+		console.log(bing2.innerHTML);
+		ok(bing2.innerHTML == 'Ping', "Extended namespace doesn't leak past its namespace.");
+		
 	});
 	
 })();
