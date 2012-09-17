@@ -38,9 +38,11 @@
 		}
 		#framework-select li a.passed {
 			color:#DEFFDA;
+			text-shadow: 1px 1px 0 #000000;
 		}
 		#framework-select li a.failed {
 			color:#FFDADA;
+			text-shadow: 1px 1px 0 #000000;
 		}
 		#framework-select li a {
 			font-size:24px;
@@ -54,10 +56,10 @@
 		body #qunit-fixture {
 			display:none;
 		}
-		body #results {
+		body #results,body #intro {
 			display:none;
 		}
-		body.tests-finished #results {
+		body.tests-finished #results,body.tests-pending #intro {
 			background: none repeat scroll 0 0 #000000;
 			color: #CCCCCC;
 			font-family: Monaco,monospace;
@@ -71,7 +73,7 @@
 			width:80%;
 			margin: auto;
 		}
-		#results h2 {
+		#results h2,#intro h2 {
 			padding:0;
 			margin:0;
 			font-weight:normal;
@@ -133,6 +135,17 @@
 		#status-template {
 			display:none;
 		}
+		#intro {
+			display:none;
+		}
+		#intro .plug-modal {
+			margin-top:20px;
+			font-size:24px;
+		}
+		#intro  a, #intro a:visited {
+			font-weight:bold;
+			color:#fff;
+		}
 	</style>
 	
 	
@@ -144,10 +157,21 @@
 			<li id="fw-prototype"><a href="?runner=prototype">Prototype</a></li>
 			<li id="fw-dojo"><a href="?runner=dojo">Dojo</a></li>
 		</ul>
-		<a id="run-all" href="?">autorun</a>
+		<a id="run-all" href="?auto=on">autorun</a>
 	</div>
 	
 	<div id="qunit"></div>
+	
+	<div id="intro">
+		
+		<h2>Welcome to the Eve.js Test Suite</h2>
+		
+		<div class="plug-modal">
+			<span class="prompt">&gt;</span> 
+			<a href="?auto=on">Run all tests</a>
+		</div>
+		
+	</div>
 	
 	<div id="results">
 		<h2>All tests complete<blink>:</blink></h2>

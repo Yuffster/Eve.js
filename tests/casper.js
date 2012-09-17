@@ -1,6 +1,6 @@
 var casper = require('casper').create();
 
-var url = require('fs').workingDirectory+"/run_tests.html";
+var url = require('fs').workingDirectory+"/run_tests.html?auto=on";
 
 casper.start(url);
 

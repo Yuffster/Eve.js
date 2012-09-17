@@ -69,9 +69,12 @@
 	}
 	
 	//Autorun if someone's just hanging around the index.
-	if (!framework&&params.results.length==0) {
+	if (!framework&&params.auto&&params.results.length==0) {
 		framework   = 'jquery';
 		params.auto = true;
+	//Display a run test message.
+	} else if (!framework&&!params.auto) {
+		document.body.className = "tests-pending";
 	//Display our final results.
 	} else if (params.done) {
 		document.body.className = "tests-finished";
