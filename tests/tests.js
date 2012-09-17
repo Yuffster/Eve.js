@@ -139,6 +139,7 @@
 			
 			this.handle('bing', 'click', function(e) {
 				e.target.innerHTML = 'Bing';
+				if (e.target.setHTML) e.target.setHTML('Bing');
 			});
 			
 		});
