@@ -70,7 +70,7 @@
 			'm1-3':"Yvax Guerr",
 			'm2-1':"Yvax Sbhe",
 			'm2-2':"Yvax Svir",
-			'm2-3':"Yvax Fvk",
+			'm2-3':"Yvax Fvk"
 		};
 		
 		var k,el,original;
@@ -97,7 +97,7 @@
 		var results = {
 			'm3-1':"Yvax Bar",
 			'm3-2':"Yvax Gjb",
-			'm3-3':"Yvax Guerr",
+			'm3-3':"Yvax Guerr"
 		};
 		var k,el,original;
 		for (k in results) {
