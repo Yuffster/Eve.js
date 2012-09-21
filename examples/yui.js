@@ -36,3 +36,23 @@ Eve.scope('.other-module', function() {
 	});
 	this.attach('rot13');
 });
+
+Eve.scope("#outer_scope", function() {
+	
+	this.scope('.inner_scope', function() {
+		
+		this.listen('a', 'click', function(e) {
+			e.target.addClass('affected');
+		});
+		
+		this.scope('#another_scope', function() {
+			
+			this.listen('span', 'click', function(e) {
+				e.target.addClass('affected');
+			});
+			
+		});
+		
+	});
+	
+});

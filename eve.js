@@ -78,7 +78,8 @@ window.Eve = {
 		var defaults = {
 			listen: this.delegateScoped,
 			find: this.findFromScope,
-			attach: this.attachFromScope
+			attach: this.attachFromScope,
+			scope: this.scopeFromScope
 		};
 		
 		for (var k in defaults) obj[k] = defaults[k];
@@ -174,6 +175,11 @@ window.Eve = {
 			console.error("Eve doesn't support your JavaScript framework.");
 		}
 
+	},
+	
+	//Yo dawg...
+	scopeFromScope: function(ns, fun) {
+		Eve.scope(this.namespace+' '+ns, fun);
 	},
 
 	//This method is bound to the namespaced closure.
