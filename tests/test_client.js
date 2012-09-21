@@ -101,21 +101,35 @@
 		document.body.appendChild(script);
 	}
 
-	//Load everything in the correct order.
-	loadScript(frameworks[framework]);
-	loadScript("eve.js");
-	loadScript("examples/"+framework+'.js');
-	loadScript("http://code.jquery.com/qunit/qunit-1.10.0.js", function() {
-		if (!params.auto) return;
-		QUnit.done(function(d) {
-			params.results.push( ""+d.failed+'-'+d.total );
-			var next = ((tests[params.results.length]) || "?done=true") +
-				'&results='+params.results.join(';') +
-				'&auto=1';
-			window.location = next;
+	function loadEnvironment() {
+		loadScript("eve.js", function() {
+			loadScript(frameworks[framework], function() {
+				if (params.conflict) Eve.setFramework(framework);
+				loadScript("examples/"+framework+'.js');
+			});
+			loadScript("http://code.jquery.com/qunit/qunit-1.10.0.js", function() {
+				if (!params.auto) return;
+				QUnit.done(function(d) {
+					params.results.push( ""+d.failed+'-'+d.total );
+					var next = ((tests[params.results.length]) || "?done=true") +
+						'&results='+params.results.join(';') +
+						'&auto=1';
+					if (params.conflict) next+='&conflict='+params.conflict;
+					window.location = next;
+				});
+			});
+			loadScript("tests/tests.js");	
 		});
-	});
-	loadScript("tests/tests.js");
+	};
+	
+	//Setting ?conflict= in the URL will load the conflicting framework first,
+	//then run Eve.setFramework on the current framework.
+	if (params.conflict) {
+		loadScript(frameworks[params.conflict], function() {
+			if (params.conflict==frameworks.jquery) jQuery.noConflict();
+			loadEnvironment();
+		});
+	} else { loadEnvironment(); }
 	
 	var link	 = document.createElement('link');
 	link.rel	 = "stylesheet";
