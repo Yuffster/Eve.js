@@ -24,113 +24,106 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-window.Eve = {
-
-	__registry: {},
-
-	__scopes: {},
-
-	__attachments: {},
+(function() {
 	
-	__extensions: {},
+var _registry = {}, _scopes = {}, _attachments = {}, _extensions = {},
+    _debugging = [], _debugAll = false;
 
-	__debugging: [],
-
-	__debugAll: false,
-
-	dbug: function(name, message) {
+function dbug(name, message) {
 		if (!window.console) { return; }
-		var debug = this.__debugAll;
-		if (!this.__debugAll) {
+		var debug = _debugAll;
+		if (!_debugAll) {
 			debug = false;
-			for (var i = 0; i<this.__debugging.length; i++) {
-				if (this.__debugging[i]==name) debug = true;
+			for (var i = 0; i<_debugging.length; i++) {
+				if (_debugging[i]==name) debug = true;
 			}
 		}
 		if (!debug) { return; }
 		while (name.length<10) { name=name+' '; }
 		name = name.substring(0, 10)+" - ";
 		console.info(name, message);
-	},
+};
+
+function bindToScope(fun, obj, reg, name) {
+	
+	for (var k in Scope) obj[k] = Scope[k];
+	for (var k in _extensions) obj[k] = _extensions[k];
+	
+	if (window.YUI) {
+		YUI().use('node', function(Y) {
+			Eve.dom  = Y.one;
+			reg[name] = fun.apply(obj);
+		});
+	} else if (window.dojo) {
+		require(["dojo/NodeList-dom", "dojo/NodeList-traverse"], function(dom){
+			Eve.dom  = dom;
+			reg[name] = fun.apply(obj);
+		});
+	} else {
+		reg[name] = fun.apply(obj);
+	}
+
+};
+
+//The primary Eve API.
+window.Eve = {
 
 	debug: function(moduleName) {
 		if (moduleName) {
-			this.__debugging.push(moduleName);
+			_debugging.push(moduleName);
 		} else {
-			this.__debugAll = true;
+			_debugAll = true;
 		}
 	},
 
 	register: function(name, obj) {
-		this.dbug(name, "registered");
-		if (this.__registry[name]) {
+		dbug(name, "registered");
+		if (_registry[name]) {
 			throw new Error("Module already exists: "+name);
 		}
-		this.__registry[name] = obj;
+		_registry[name] = obj;
 		return this;
 	},
 	
 	extend: function(key, fun) {
-		this.__extensions[key] = fun;
+		_extensions[key] = fun;
 	},
 
-	bindToScope: function(fun, obj, reg, name) {
-		var defaults = {
-			listen: this.delegateScoped,
-			find: this.findFromScope,
-			attach: this.attachFromScope,
-			scope: this.scopeFromScope
-		};
-		
-		for (var k in defaults) obj[k] = defaults[k];
-		for (var k in this.__extensions) obj[k] = this.__extensions[k];
-		
-		if (window.YUI) {
-			YUI().use('node', function(Y) {
-				Eve.dom  = Y.one;
-				Eve[reg][name] = fun.apply(obj);
-			});
-		} else if (window.dojo) {
-			require(["dojo/NodeList-dom", "dojo/NodeList-traverse"], function(dom){
-				Eve.dom  = dom;
-				Eve[reg][name] = fun.apply(obj);
-			});
-		} else {
-			Eve[reg][name] = fun.apply(obj);
-		}
-	},
 
 	scope: function(ns, fun) {
-		if (this.__scopes[ns]) {
+		if (_scopes[ns]) {
 			console.warn("Duplicate namespace: "+ns);
 		}
-		this.bindToScope(fun, {
+		bindToScope(fun, {
 			name: ns,
 			namespace: ns
-		}, '__scopes', ns);
+		}, _scopes, ns);
 	},
 
 	attach: function(moduleName, namespace) {
-		this.dbug(moduleName, "attached to "+namespace);
+		dbug(moduleName, "attached to "+namespace);
 		//We're delegating off the window, so there's no need to reattach for
 		//multiple instances of a single given module.
-		if (this.__attachments[moduleName+namespace]) {
+		if (_attachments[moduleName+namespace]) {
 			return false;
 		}
-		if (!this.__registry[moduleName]) {
+		if (!_registry[moduleName]) {
 			console.warn("Module not found: "+moduleName);
 			return false;
 		}
-		var mod = this.bindToScope(this.__registry[moduleName], {
+		var mod = bindToScope(_registry[moduleName], {
 			namespace:namespace,
 			name:moduleName
-		}, '__attachments', moduleName+namespace);
+		}, _attachments, moduleName+namespace);
 		return true;
-	},
+	}
 
-	//This method is bound to the namespaced closure.
-	delegateScoped: function(selector, event, handler) {
+};
 
+var Scope = {
+	
+	listen: function(selector, event, handler) {
+		
 		//There's a special hell for putting optional parameters at the
 		//beginning.  A special and awesome hell.
 		if (!handler) {
@@ -149,7 +142,7 @@ window.Eve = {
 			obj  = { };
 			for (k in this) if (this.hasOwnProperty(k))	obj[k] = this[k];
 			function fun(e,t) {
-				Eve.dbug(name, sel+':'+event);
+				dbug(name, sel+':'+event);
 				obj.event = e;
 				if (window.MooTools) { e.target = t; }
 				if (window.jQuery)   { e.target = e.currentTarget; }
@@ -176,18 +169,18 @@ window.Eve = {
 		}
 
 	},
-	
+
 	//Yo dawg...
-	scopeFromScope: function(ns, fun) {
+	scope: function(ns, fun) {
 		Eve.scope(this.namespace+' '+ns, fun);
 	},
 
 	//This method is bound to the namespaced closure.
-	attachFromScope: function(moduleName, ns) {
+	attach: function(moduleName, ns) {
 		Eve.attach(moduleName, this.namespace+' '+(ns||''));
 	},
-	
-	findFromScope: function(sel) {
+
+	find: function(sel) {
 		var scope;
 		if (!sel || typeof(sel)=='string') { sel = (sel || '').trim(); }
 		//Scope to the particular instance of the DOM module active in this
@@ -222,5 +215,7 @@ window.Eve = {
 			}
 		}
 	}
-
+	
 };
+
+})();
