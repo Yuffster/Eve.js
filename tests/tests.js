@@ -129,6 +129,22 @@
 		ok(el1.className=='active', "Clicked module one element is still active.");
 	});
 	
+	test("Should scope inner-scoped .scope to parent namespace", function() {
+		
+		var el1 = simulate('inside-scope', 'click');
+		var el2 = simulate('out-of-scope', 'click');
+		
+		ok(el1.className=="affected", "Inner-scoped element should be affected by nested scoping.");
+		ok(el2.className!="affected", "Outer-scoped element should not be affected by nested scoping.");
+		
+		var el3 = simulate('inside-recursive-scope', 'click');
+		var el4 = simulate('out-of-recursive-scope', 'click');
+		
+		ok(el3.className=="affected", "Inner-scoped element should be affected by recursive scoping.");
+		ok(el4.className!="affected", "Outer-scoped element should not be affected by recursive scoping.");
+		
+	});
+	
 	test("Should allow for extending Eve.js with additional scoped methods", function() {
 		
 		Eve.extend('handle', function(key, e, fun) {

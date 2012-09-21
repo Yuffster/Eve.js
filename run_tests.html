@@ -253,6 +253,24 @@
 		
 		<a href="#" id="bing-target2" data-action="bing">Ping</a>
 		
+		<div id="outer_scope">
+
+			#outer_scope .inner_scope a
+			#outer_scope .inner_scope #another_scope span
+			<div class="inner_scope">
+				<a href="#" id="inside-scope">In scope</a>
+				<span id="out-of-recursive-scope" class="second">Out of scope</span>	
+				<div id="another_scope">
+					<span id="inside-recursive-scope">In scope</a>	
+				</div>
+			</div>
+
+		</div>
+
+		<div class="inner_scope">
+			<a href="#" id="out-of-scope">Out of scope</a>
+		</div>
+		
 	</div>
 	
 	<script type="text/javascript" src="tests/test_client.js"></script>
