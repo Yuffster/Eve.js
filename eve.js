@@ -200,7 +200,6 @@ var Scope = {
 		Eve.scope(this.namespace+' '+ns, fun);
 	},
 
-	//This method is bound to the namespaced closure.
 	attach: function(moduleName, ns) {
 		Eve.attach(moduleName, this.namespace+' '+(ns||''));
 	},
