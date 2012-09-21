@@ -25,9 +25,31 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 (function() {
-	
+
 var _registry = {}, _scopes = {}, _attachments = {}, _extensions = {},
-    _debugging = [], _debugAll = false;
+    _debugging = [], _debugAll = false, _framework;
+
+//Detects the current JavaScript framework.
+function detectFramework() {
+
+	if (_framework) return _framework;
+
+	var fws = ['jQuery', 'MooTools', 'YUI', 'Prototype', 'dojo'];
+	for (var i = 0; i<= fws.length; i++) {
+		if (window[fws[i]]) {
+			Eve.setFramework(fws[i]);
+			return fws[i];
+		}
+	} console.error("Eve doesn't support your JavaScript framework.");
+
+};
+
+//Either matches the chosen JS framework to the passed guess, or returns the
+//current framework.
+function using(guess) {
+	var fw = _framework || detectFramework();
+	return (guess) ? (_framework == guess.toLowerCase()) : _framework;
+};
 
 function dbug(name, message) {
 		if (!window.console) { return; }
@@ -49,12 +71,12 @@ function bindToScope(fun, obj, reg, name) {
 	for (var k in Scope) obj[k] = Scope[k];
 	for (var k in _extensions) obj[k] = _extensions[k];
 	
-	if (window.YUI) {
+	if (using("YUI")) {
 		YUI().use('node', function(Y) {
 			Eve.dom  = Y.one;
 			reg[name] = fun.apply(obj);
 		});
-	} else if (window.dojo) {
+	} else if (using("dojo")) {
 		require(["dojo/NodeList-dom", "dojo/NodeList-traverse"], function(dom){
 			Eve.dom  = dom;
 			reg[name] = fun.apply(obj);
@@ -67,6 +89,11 @@ function bindToScope(fun, obj, reg, name) {
 
 //The primary Eve API.
 window.Eve = {
+	
+	setFramework: function(fw) {
+		_framework = (fw+"").toLowerCase();
+		if (_framework=='jquery') $ = jQuery; //No-conflict compat.
+	},
 
 	debug: function(moduleName) {
 		if (moduleName) {
@@ -88,7 +115,6 @@ window.Eve = {
 	extend: function(key, fun) {
 		_extensions[key] = fun;
 	},
-
 
 	scope: function(ns, fun) {
 		if (_scopes[ns]) {
@@ -144,28 +170,27 @@ var Scope = {
 			function fun(e,t) {
 				dbug(name, sel+':'+event);
 				obj.event = e;
-				if (window.MooTools) { e.target = t; }
-				if (window.jQuery)   { e.target = e.currentTarget; }
+				if (using("MooTools")) { e.target = t; }
+				if (using("jQuery"))   { e.target = e.currentTarget; }
+				if (using("dojo"))     { e.target = e.explicitOriginalTarget; }
 				handler.apply(obj, arguments);
 			};
 
 		//JavaScript framework development is so much easier when you let some
 		//other framework do most of the work.
-		if (window.jQuery) {
+		if (using("jQuery")) {
 			$(scope).delegate(sel, event, fun);
-		} else if (window.MooTools) {
+		} else if (using('MooTools')) {
 			//I really hate the MooTools event delegation syntax.
 			$(scope).addEvent(event+':relay('+sel+')', fun);
-		} else if (window.YUI) {
+		} else if (using("YUI")) {
 			Eve.dom(scope).delegate(event, fun, sel);
-		} else if (window.Prototype) {
+		} else if (using("Prototype")) {
 			$(scope).on(event, sel, fun);
-		} else if (window.dojo) {
+		} else if (using("dojo")) {
 			require(["dojo/on"], function(on){
 				on(scope, sel+':'+event, fun);
 			});
-		} else {
-			console.error("Eve doesn't support your JavaScript framework.");
 		}
 
 	},
@@ -186,7 +211,8 @@ var Scope = {
 		//Scope to the particular instance of the DOM module active in this
 		//event.
 		if (this.event) {
-			var t = (window.$) ? $(this.event.target) : this.event.target;
+			var t = this.event.target;
+			if (using('jQuery')) t = jQuery(t);
 			var map = {
 				jQuery: ['is', 'parents', 'find'],
 				MooTools: ['match', 'getParent', 'getElements'],
@@ -194,13 +220,13 @@ var Scope = {
 				YUI: ['test', 'ancestor', 'all']
 			};
 			for (var fw in map) {
-				if (!window[fw]) continue;
+				if (!using(fw)) continue;
 				var m = map[fw], match = m[0], up = m[1], all = m[2];
 				if (t[match](this.namespace)) return t;
 				scope = t[up](this.namespace);
 				return (sel) ? scope[all](sel) : scope;
 			}
-			if (window.dojo) {
+			if (using('dojo')) {
 				//Dojo returns the current node if it matches the selector.
 				scope = Eve.dom(t).closest(this.namespace);
 				return (sel) ? scope.query(sel) : scope;
@@ -208,9 +234,9 @@ var Scope = {
 		//Scope to the DOM namespace across all instances.
 		} else {
 			sel = this.namespace+' '+sel;
-			if (window.jQuery||window.Prototype) {
+			if (using('jQuery')||using('Prototype')) {
 				return $(sel);
-			} else if (window.MooTools) {
+			} else if (using('MooTools')) {
 				return $$(sel);
 			}
 		}
