@@ -21,6 +21,11 @@
 	//Outputs the final results to a pretty list.
 	function outputResults(results, tests) {	
 		var o, ul, li, passes, total, status, els, finals = {passes:0,total:0};
+		pstring = "";
+		for (var k in params) {
+			if (k=='results'||k=='done'||k=='auto') continue;
+			pstring += '&'+k+'='+params[k];
+		}
 		els = document.getElementById('framework-select').getElementsByTagName('a');
 		for (var i = 0; i<results.length; i++) {
 			total  = Number(results[i].split('-')[1]);
@@ -33,7 +38,7 @@
 			    total  : total,
 			    name   : els[i].innerHTML,
 			    status : status,
-				href   : els[i].href
+				href   : els[i].href+pstring
 			}
 			ul = document.createElement('ul'),
 			ul.appendChild(document.getElementById('status-template').cloneNode(true));
@@ -111,11 +116,11 @@
 				if (!params.auto) return;
 				QUnit.done(function(d) {
 					params.results.push( ""+d.failed+'-'+d.total );
-					var next = ((tests[params.results.length]) || "?done=true") +
-						'&results='+params.results.join(';') +
-						'&auto=1';
-					if (params.conflict) next+='&conflict='+params.conflict;
-					window.location = next;
+					var next = ((tests[params.results.length]) || "?done=true");
+					params.results = params.results.join(';');
+					for (var k in params) {
+						if (k!="runner") next += '&'+k+'='+params[k];
+					} window.location = next;
 				});
 			});
 			loadScript("tests/tests.js");	
