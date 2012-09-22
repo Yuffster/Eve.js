@@ -194,16 +194,7 @@ var Scope = {
 		}
 
 	},
-
-	//Yo dawg...
-	scope: function(ns, fun) {
-		Eve.scope(this.namespace+' '+ns, fun);
-	},
-
-	attach: function(moduleName, ns) {
-		Eve.attach(moduleName, this.namespace+' '+(ns||''));
-	},
-
+	
 	find: function(sel) {
 		var scope;
 		if (!sel || typeof(sel)=='string') { sel = (sel || '').trim(); }
@@ -239,6 +230,15 @@ var Scope = {
 				return $$(sel);
 			}
 		}
+	},
+
+	//Yo dawg...
+	scope: function(ns, fun) {
+		Eve.scope(this.namespace+' '+ns, fun);
+	},
+
+	attach: function(moduleName, ns) {
+		Eve.attach(moduleName, this.namespace+' '+(ns||''));
 	}
 	
 };
