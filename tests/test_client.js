@@ -113,6 +113,11 @@
 				loadScript("examples/"+framework+'.js');
 			});
 			loadScript("http://code.jquery.com/qunit/qunit-1.10.0.js", function() {
+				//Phantomjs hook
+				if (params.log_to_json) QUnit.testDone(function(d) {
+					d.framework=params.runner;
+					console.log(JSON.stringify(d));
+				});
 				if (!params.auto) return;
 				QUnit.done(function(d) {
 					params.results.push( ""+d.failed+'-'+d.total );

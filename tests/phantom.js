@@ -10,9 +10,16 @@ function wait(con, fun, max) {
 	}, max || 5000);
 };
 
-var page = new WebPage();
+var page = new WebPage(), options = phantom.args[0] || "", lastFramework;
+page.onConsoleMessage = function (msg) { 
+	var d = JSON.parse(msg);
+	if (!d.failed) return;
+	if (d.framework!=lastFramework) console.log(d.framework+":");
+	console.log("\033[31mo    " + d.name + "\033[0m");
+	lastFramework = d.framework;
+};
 
-page.open(require('fs').workingDirectory+"/run_tests.html?auto=on", function(status){
+page.open(require('fs').workingDirectory+"/run_tests.html?auto=on&log_to_json=1&"+options, function(status){
     if (status !== "success") {
         console.log("Unable to access network");
         phantom.exit();
@@ -22,14 +29,13 @@ page.open(require('fs').workingDirectory+"/run_tests.html?auto=on", function(sta
                 return window.Eve_results !== undefined;
             });
         }, function(){
-            var failedNum = page.evaluate(function(){
-                return window.Eve_results.failures;
+            var r = page.evaluate(function(){
+                return window.Eve_results;
             });
 			console.log(
-				(failedNum==0) ?
-				"All tests passed." : failedNum+" failures"
+				( (r.failures>0) ? "Failed" : "Passed") + ": "+(r.passes+"/"+r.total)
 			);
-            phantom.exit((parseInt(failedNum, 10) > 0) ? 1 : 0);
+            phantom.exit((parseInt(r.failures, 10) > 0) ? 1 : 0);
         });
     }
 });
