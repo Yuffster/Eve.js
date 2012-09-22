@@ -10,7 +10,10 @@ function wait(con, fun, max) {
 	}, max || 5000);
 };
 
-var page = new WebPage(), options = phantom.args[0] || "", lastFramework;
+var page = new WebPage(), options = phantom.args[0] || "", 
+    path = "/run_tests.html?auto=on&log_to_json=1&"+options,
+    lastFramework;
+
 page.onConsoleMessage = function (msg) { 
 	var d = JSON.parse(msg);
 	if (!d.failed) return;
@@ -19,7 +22,7 @@ page.onConsoleMessage = function (msg) {
 	lastFramework = d.framework;
 };
 
-page.open(require('fs').workingDirectory+"/run_tests.html?auto=on&log_to_json=1&"+options, function(status){
+page.open(require('fs').workingDirectory+path, function(status){
     if (status !== "success") {
         console.log("Unable to access network");
         phantom.exit();
@@ -35,7 +38,7 @@ page.open(require('fs').workingDirectory+"/run_tests.html?auto=on&log_to_json=1&
 			console.log(
 				( (r.failures>0) ? "Failed" : "Passed") + ": "+(r.passes+"/"+r.total)
 			);
-            phantom.exit((parseInt(r.failures, 10) > 0) ? 1 : 0);
+            phantom.exit(r.failures);
         });
     }
 });
