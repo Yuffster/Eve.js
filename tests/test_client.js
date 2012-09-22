@@ -126,7 +126,7 @@
 	//then run Eve.setFramework on the current framework.
 	if (params.conflict) {
 		loadScript(frameworks[params.conflict], function() {
-			if (params.conflict==frameworks.jquery) jQuery.noConflict();
+			if (params.conflict=='jquery') jQuery.noConflict();
 			loadEnvironment();
 		});
 	} else { loadEnvironment(); }
