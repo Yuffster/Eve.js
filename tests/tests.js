@@ -85,6 +85,21 @@
 	
 	});
 	
+	test("Should allow for passing options to attached modules", function() {
+		
+		Eve.register("arg-test", function(a,b,c) {
+			
+			ok(arguments.length==3, "Three arguments passed.");
+			ok(a=='a', "First argument as expected.");
+			ok(b=='b', "Second argument as expected.");
+			ok(c=='c', "Third argument as expected.");
+			
+		});
+		
+		Eve.attach('arg-test', '.foo', 'a', 'b', 'c');
+		
+	});
+	
 	test("Should scope .find to a CSS namespace.", function() {
 		var oconsole = console.log, output;
 		console.log = function(m) { output=m; }

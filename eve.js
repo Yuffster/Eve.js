@@ -127,6 +127,9 @@ window.Eve = {
 	},
 
 	attach: function(moduleName, namespace) {
+		var fun, args = [], i=0;
+		for (i;i<arguments.length;i++) args[args.length] = arguments[i];
+		fun = function() { _registry[moduleName].apply(this, args.slice(2)); }
 		dbug(moduleName, "attached to "+namespace);
 		//We're delegating off the window, so there's no need to reattach for
 		//multiple instances of a single given module.
@@ -137,7 +140,7 @@ window.Eve = {
 			console.warn("Module not found: "+moduleName);
 			return false;
 		}
-		var mod = bindToScope(_registry[moduleName], {
+		var mod = bindToScope(fun, {
 			namespace:namespace,
 			name:moduleName
 		}, _attachments, moduleName+namespace);
