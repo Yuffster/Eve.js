@@ -27,7 +27,7 @@
 (function() {
 
 var _registry = {}, _scopes = {}, _attachments = {}, _extensions = {},
-    _debugging = [], _debugAll = false, _framework;
+    _debugging = [], _debugAll = false, _framework, _dom;
 
 //Detects the current JavaScript framework.
 function detectFramework() {
@@ -73,12 +73,12 @@ function bindToScope(fun, obj, reg, name) {
 	
 	if (using("YUI")) {
 		YUI().use('node', function(Y) {
-			Eve.dom  = Y.one;
+			_dom  = Y.one;
 			reg[name] = fun.apply(obj);
 		});
 	} else if (using("dojo")) {
 		require(["dojo/NodeList-dom", "dojo/NodeList-traverse"], function(dom){
-			Eve.dom  = dom;
+			_dom  = dom;
 			reg[name] = fun.apply(obj);
 		});
 	} else {
@@ -187,7 +187,7 @@ var Scope = {
 			//I really hate the MooTools event delegation syntax.
 			$(scope).addEvent(event+':relay('+sel+')', fun);
 		} else if (using("YUI")) {
-			Eve.dom(scope).delegate(event, fun, sel);
+			_dom(scope).delegate(event, fun, sel);
 		} else if (using("Prototype")) {
 			$(scope).on(event, sel, fun);
 		} else if (using("dojo")) {
@@ -221,7 +221,7 @@ var Scope = {
 			}
 			if (using('dojo')) {
 				//Dojo returns the current node if it matches the selector.
-				scope = Eve.dom(t).closest(this.namespace);
+				scope = _dom(t).closest(this.namespace);
 				return (sel) ? scope.query(sel) : scope;
 			}
 		//Scope to the DOM namespace across all instances.
@@ -232,9 +232,9 @@ var Scope = {
 			} else if (using('MooTools')||using('Prototype')) {
 				return $$(sel);
 			} else if (using('dojo')) {
-				return Eve.dom(document.body).query(sel);
+				return _dom(document.body).query(sel);
 			} else if (using('YUI')) {
-				return Eve.dom(document.body).all(sel);
+				return _dom(document.body).all(sel);
 			}
 		}
 	},
