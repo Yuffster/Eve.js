@@ -199,7 +199,7 @@ var Scope = {
 	},
 	
 	find: function(sel) {
-		var scope;
+		var scope, result, s;
 		if (!sel || typeof(sel)=='string') { sel = (sel || '').trim(); }
 		//Scope to the particular instance of the DOM module active in this
 		//event.
@@ -226,17 +226,23 @@ var Scope = {
 			}
 		//Scope to the DOM namespace across all instances.
 		} else {
-			sel = this.namespace+' '+sel;
+			s = this.namespace+' '+sel;
 			if (using('jQuery')) {
-				return $(sel);
+				result = $(s);
 			} else if (using('MooTools')||using('Prototype')) {
-				return $$(sel);
+				result = $$(s);
 			} else if (using('dojo')) {
-				return _dom(document.body).query(sel);
+				result = _dom(document.body).query(s);
 			} else if (using('YUI')) {
-				return _dom(document.body).all(sel);
-			}
+				result = _dom(document.body).all(s);
+			} return (sel) ? result : this.first(s, result);
 		}
+	},
+	
+	first: function(sel,result) {
+		result = (arguments.length==2) ? result : this.find(sel);
+		if (using('YUI')) result = result.getDOMNodes();
+		return result[0];
 	},
 
 	//Yo dawg...

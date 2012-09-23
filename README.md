@@ -282,3 +282,32 @@ this.find(selector);
 	    });
 
 	});
+	
+#### first
+
+An alias of `.find` which only returns the first result.
+
+##### Syntax
+
+this.first(selector);
+
+##### Arguments
+
+- selector (string): A CSS selector.
+
+##### Example
+
+	Eve.scope('.image-slideshow', function() {
+
+		//Will return all .image-slideshow img items.
+		this.find('img');
+
+	    this.listen('a', 'click', function() {
+
+			// Only returns img.active items within the current
+			// .image-slideshow element.
+	        this.first('img.active');
+
+	    });
+
+	});

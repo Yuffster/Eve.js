@@ -113,8 +113,7 @@
 		Eve.scope('#m2', function() {
 			
 			var result = this.find();
-			if (result.getDOMNodes) result = result.getDOMNodes();
-			ok(result[0].id == 'm2', "Found the expected element.");
+			ok(result.getAttribute('id') == 'm2', "Found the expected element.");
 			
 		});
 		
