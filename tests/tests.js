@@ -168,4 +168,26 @@
 		
 	});
 	
+	test("Should allow for adding custom CSS selector", function() {
+		
+		Eve.addSelector('@', "[data-action=%s]");
+		Eve.addSelector('$', "[data-model=%s]");
+		
+		Eve.scope('#selector_test', function() {
+			
+			this.listen('$product @destroy', 'click', function(e) {
+				e.target.innerHTML = 'Destroyed';
+				if (e.target.setHTML) e.target.setHTML('Destroyed');
+			});
+			
+		});
+		
+		var product1 = simulate('destroy-product-1', 'click');
+		
+		ok(product1.innerHTML == 'Destroyed', "Clicked product has been destroyed.");
+		
+		ok(document.getElementById('destroy-product-2').innerHTML == 'Destroy');
+		
+	});
+	
 })();

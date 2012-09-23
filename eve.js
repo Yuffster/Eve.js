@@ -27,7 +27,7 @@
 (function() {
 
 var _registry = {}, _scopes = {}, _attachments = {}, _extensions = {},
-    _debugging = [], _debugAll = false, _framework;
+    _debugging = [], _debugAll = false, _framework, _selectors = {};
 
 //Detects the current JavaScript framework.
 function detectFramework() {
@@ -87,6 +87,19 @@ function bindToScope(fun, obj, reg, name) {
 
 };
 
+function expandSelector(sel) {
+	var k, m, i, s;
+	for (k in _selectors) {
+	    s = k.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+		m = sel.match(new RegExp(s+"(\\w+)", 'g'));
+		if (!m) continue;
+		for (i=0;i<m.length;i++) {
+		  val = new RegExp(s+"(\\w+)").exec(sel);
+		  sel = sel.replace(m[i], _selectors[k].replace('%s', val[1]));
+		}
+	} return sel;
+};
+
 //The primary Eve API.
 window.Eve = {
 	
@@ -115,8 +128,13 @@ window.Eve = {
 	extend: function(key, fun) {
 		_extensions[key] = fun;
 	},
+	
+	addSelector: function(pattern, expansion) {
+		_selectors[pattern] = expansion;
+	},
 
 	scope: function(ns, fun) {
+		ns = expandSelector(ns);
 		if (_scopes[ns]) {
 			console.warn("Duplicate namespace: "+ns);
 		}
@@ -127,6 +145,7 @@ window.Eve = {
 	},
 
 	attach: function(moduleName, namespace) {
+		namespace = expandSelector(namespace);
 		dbug(moduleName, "attached to "+namespace);
 		//We're delegating off the window, so there's no need to reattach for
 		//multiple instances of a single given module.
@@ -158,6 +177,7 @@ var Scope = {
 			selector = '';
 		}
 		selector = selector || '';
+		selector = expandSelector(selector);
 
 		//If listen is happening in the context of a triggered event handler,
 		//we only want to delegate to the current event namespace.
@@ -196,6 +216,7 @@ var Scope = {
 	},
 	
 	find: function(sel) {
+		sel = expandSelector(sel);
 		var scope;
 		if (!sel || typeof(sel)=='string') { sel = (sel || '').trim(); }
 		//Scope to the particular instance of the DOM module active in this
@@ -239,6 +260,10 @@ var Scope = {
 
 	attach: function(moduleName, ns) {
 		Eve.attach(moduleName, this.namespace+' '+(ns||''));
+	},
+	
+	expand: function(sel) {
+		return expandSelector(this.namespace+' '+sel);
 	}
 	
 };
