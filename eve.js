@@ -227,10 +227,14 @@ var Scope = {
 		//Scope to the DOM namespace across all instances.
 		} else {
 			sel = this.namespace+' '+sel;
-			if (using('jQuery')||using('Prototype')) {
+			if (using('jQuery')) {
 				return $(sel);
-			} else if (using('MooTools')) {
+			} else if (using('MooTools')||using('Prototype')) {
 				return $$(sel);
+			} else if (using('dojo')) {
+				return Eve.dom(document.body).query(sel);
+			} else if (using('YUI')) {
+				return Eve.dom(document.body).all(sel);
 			}
 		}
 	},
