@@ -138,4 +138,4 @@ With Eve.debug, you can automatically log any event as it's triggered along with
 	//Or modules.
 	Eve.debug('jimsSlideshow');
 
-[Complete API Documentation]()
+[Complete API Documentation](docs/API_Documentation.md)
