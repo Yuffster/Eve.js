@@ -29,6 +29,10 @@ a full barrage of tests for each supported framework in its own isolated environ
 
 Tests may be run from the command line with `./run_tests.sh`.  ([PhantomJS](http://phantomjs.org/) required.)
 
+## Development Community
+
+Questions?  Comments?  Feel free to visit us in #Eve.js on Freenode.
+
 ## Three Simple Methods
 
 The vast majority of the power of Eve.js can be unlocked by chaining together three simple methods: scope, find, and listen:
