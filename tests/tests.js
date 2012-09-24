@@ -87,16 +87,17 @@
 	
 	test("Should allow for passing options to attached modules", function() {
 		
+		var args;
 		Eve.register("arg-test", function(a,b,c) {
-			
-			ok(arguments.length==3, "Three arguments passed.");
-			ok(a=='a', "First argument as expected.");
-			ok(b=='b', "Second argument as expected.");
-			ok(c=='c', "Third argument as expected.");
-			
+			args = arguments;
 		});
 		
 		Eve.attach('arg-test', '.foo', 'a', 'b', 'c');
+		
+		ok(args.length==3, "Three arguments passed.");
+		ok(args[0]=='a', "First argument as expected.");
+		ok(args[1]=='b', "Second argument as expected.");
+		ok(args[2]=='c', "Third argument as expected.");
 		
 	});
 	
@@ -110,31 +111,40 @@
 	
 	test(".find by itself should return the root parent namespace", function() {
 		
+		var result;
 		Eve.scope('#m2', function() {
-			
-			var result = this.find();
+			result = this.find();
 			if (result.getDOMNodes) result = result.getDOMNodes();
-			ok(result[0].getAttribute('id') == 'm2', "Found the expected element.");
-			
 		});
 		
+		ok(result[0].getAttribute('id') == 'm2', "Found the expected element.");
+		
 		Eve.scope('.list-module', function() {
-			var result = this.find();
+			result = this.find();
 			if (result.getDOMNodes) result = result.getDOMNodes();
-			ok(result.length == 2, "Two parent namespace nodes returned.");
 		});
+		
+		ok(result.length==2);
 		
 	});
 	
 	test(".first should return the first of matching items", function() {
 		
-		Eve.scope('#m2', function() {
-			ok(this.first().getAttribute('id') == 'm2', "Found the expected element.");
+		Eve.scope('#click-me', function() {
+			this.listen('a', 'click', function(e) {
+				this.first('a').innerHTML = 'clicked';
+			});
 		});
 		
-		Eve.scope('.list-module', function() {
-			ok(this.first().getAttribute('id') == 'm1', "Correct parent namespace nodes returned.");
+		var el = simulate('click-me-a', 'click');
+		ok(el.innerHTML == 'clicked', "Found the expected element.");
+		
+		Eve.scope('#els-list', function() {
+			this.first('span').className = 'clicked-first';
 		});
+		
+		el = document.getElementById('first');
+		ok(el.className == 'clicked-first', "Correct parent namespace node returned.");
 		
 	});
 	
