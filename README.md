@@ -6,6 +6,18 @@ A <3kb JavaScript file providing three simple methods to organize code into CSS 
 
 <http://evejs.com>
 
+## Dependencies
+
+Eve.js is a metaframework, meaning it works on top of any popular JavaScript framework.
+
+You'll need to be using one of the following supported frameworks:
+
+* [jQuery](http://jquery.com)
+* [MooTools](http://mootools.net)
+* [YUI](http://yuilibrary.com/)
+* [Prototype](http://prototypejs.org/)
+* [Dojo](http://dojotoolkit.org/)
+
 ## Installation
 
 The latest stable minified library version lives at <http://evejs.com/stable/eve.min.js>.
