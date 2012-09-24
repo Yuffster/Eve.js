@@ -126,7 +126,7 @@ Eve.scope('.slideshow', function() {
         //.find will only return elements matching '.current'
         //within the parent .slideshow element which was
         //clicked on.
-        this.find('.current')
+        this.find('.current').shift()
             .removeClass('.current')
             .getNext().addClass('current');
 
@@ -171,7 +171,9 @@ Eve.register('jimsSlideshow', function() {
     //although we don't know what those namespaces will be yet.
     this.listen('.advance', 'click', function(e) {
 
-        this.find('.current')
+        //We can also use this.first as an alias for
+        //this.find().shift();
+        this.first('.current')
             .removeClass('.current')
             .getNext().addClass('current');
 
@@ -219,7 +221,7 @@ Eve.scope('.slideshow', function() {
     //this.listen("[data-action=advance]", 'click', function);
     this.handle('advance', 'click', function(e) {
 
-        this.find('.current')
+        this.first('.current')
             .removeClass('.current')
             .getNext().addClass('current');
 
