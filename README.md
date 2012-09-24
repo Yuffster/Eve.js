@@ -2,7 +2,7 @@
 
 [![Build Status](https://secure.travis-ci.org/Yuffster/Eve.js.png)](http://travis-ci.org/Yuffster/Eve.js)
 
-A `<3kb` JavaScript file providing `three simple methods` to organize code into CSS namespaces which `magically restrict code to the current context`, allowing for `dramatic reductions to code size and development time`. 
+A <3kb JavaScript file providing three simple methods to organize code into CSS namespaces which magically restrict code to the current context, allowing for dramatic reductions to code size and development time. 
 
 <http://evejs.com>
 
