@@ -107,7 +107,7 @@
 	}
 
 	function loadEnvironment() {
-		loadScript("../lib/eve.js", function() {
+		loadScript("../src/eve.js", function() {
 			loadScript(frameworks[framework], function() {
 				if (params.conflict) Eve.setFramework(framework);
 				loadScript("../examples/"+framework+'.js');
