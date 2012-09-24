@@ -107,10 +107,10 @@
 	}
 
 	function loadEnvironment() {
-		loadScript("eve.js", function() {
+		loadScript("../lib/eve.js", function() {
 			loadScript(frameworks[framework], function() {
 				if (params.conflict) Eve.setFramework(framework);
-				loadScript("examples/"+framework+'.js');
+				loadScript("../examples/"+framework+'.js');
 			});
 			loadScript("http://code.jquery.com/qunit/qunit-1.10.0.js", function() {
 				//Phantomjs hook
@@ -128,7 +128,7 @@
 					} window.location = next;
 				});
 			});
-			loadScript("tests/tests.js");	
+			loadScript("tests.js");	
 		});
 	};
 	

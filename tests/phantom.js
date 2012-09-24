@@ -11,7 +11,7 @@ function wait(con, fun, max) {
 };
 
 var page = new WebPage(), options = phantom.args[0] || "", 
-    path = "/run_tests.html?auto=on&log_to_json=1&"+options,
+    path = "/tests/run_tests.html?auto=on&log_to_json=1&"+options,
     lastFramework;
 
 page.onConsoleMessage = function (msg) { 
@@ -21,7 +21,6 @@ page.onConsoleMessage = function (msg) {
 	console.log("\033[31mo    " + d.name + "\033[0m");
 	lastFramework = d.framework;
 };
-
 page.open(require('fs').workingDirectory+path, function(status){
     if (status !== "success") {
         console.log("Unable to access network");
