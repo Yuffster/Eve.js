@@ -2,12 +2,33 @@
 <html>
 	<head>
 		<title>
-			Eve.js - The JavaScript Metaframework
+			Eve.js - Three Kilobytes of Magic
 		</title>
 		<link rel="stylesheet" href="styles/main.css"/>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<link rel="stylesheet" href="http://yandex.st/highlightjs/7.2/styles/ir_black.min.css">
+		<script src="http://yandex.st/highlightjs/7.2/highlight.min.js"></script>
+		<script>hljs.initHighlightingOnLoad();</script>
 	</head>
 	<body>
+		
+		<nav id="main-nav">
+			<ul class="navigation">
+				<li class="active"><a href="#">Features</a></li>
+				<li>
+					<a href="http://github.com/Yuffster/Eve.js/blob/master/docs/API_Documentation.md">API Documentation</a>
+				</li>
+				<li>
+					<a href="http://github.com/Yuffster/Eve.js">Development</a>
+				</li>
+				<li class="download right"><a href="#">Download (v0.6)</a>
+					<ul>
+						<li><a href="http://evejs.com/stable/eve.min.js">Minified</a></li>
+						<li><a href="http://evejs.com/stable/eve.js">Uncompressed</a></li>
+					</ul>
+				</li>
+			</ul>
+		</nav>
 		
 		<div id="top">
 			
@@ -17,11 +38,17 @@
 				
 				<div class="github-cta">
 					<a class="btn btn-large" href="http://github.com/Yuffster/Eve.js">
-						<span>View Project on GitHub</span>
+						<span>View Project on GitHub</span> <i></i> 
 					</a>
-					<p class="version">
+					<!--p class="version">
 						Latest version:
 						<span id="latest-version"></span>
+					</p-->
+					<p class="ghbuttons">
+						<iframe src="http://ghbtns.com/github-btn.html?user=yuffster&repo=eve.js&type=watch&count=true"
+						  allowtransparency="true" frameborder="0" scrolling="0" width="95px" height="20px"></iframe>
+						<iframe src="http://ghbtns.com/github-btn.html?user=yuffster&repo=eve.js&type=fork&count=true"
+						  allowtransparency="true" frameborder="0" scrolling="0" width="95px" height="20px"></iframe>
 					</p>
 					<p class="status">
 						<a href="http://travis-ci.org/Yuffster/Eve.js">
@@ -30,29 +57,33 @@
 					</p>
 				</div>
 		
-				<h2>The JavaScript Metaframework</h2>
+				<h2>Introducing Eve.js</h2>
 				
-				<p class="blurb">
-					The featherweight JavaScript 
-					<em>meta-framework</em> which hooks into any major 
-					JavaScript library to make <em>scoped event
-					delegation</em> and <em>modular encapsulation</em>
-					automatic and painless.
-				</p>
+				<div class="blurb">
+					<p>
+					A <em class='lt3'>&lt;3kb</em> JavaScript file providing <em>three simple methods</em> 
+					to organize code into <em>CSS namespaces</em> which
+					<em>magically restrict code to the current context</em>, 
+					allowing for <em>dramatic reductions to code size and development time</em>.
+					</p>
+					<div class="learn-cta">
+						<a class="" href="#examples">View Example Code</a>
+					</div>
+				</div>
 				
 				<div class="kickstart">
 					<h3>Kickstart your next project with:</h3>
 					<p><span class="terminal">
 						<span class="prompt">&gt;</span> wget
 						<a href="http://evejs.com/stable/eve.js">
-							http://evejs.com/stable/eve.js
-						</a>	
+							http://evejs.com/stable/eve.min.js
+						</a>
 					</span></p>
 				</div>
-		
+
 				<div class="framework-support">
 				
-					<h3>Click below to view a demo in your favorite framework:</h3>
+					<h3>Click below for a demo in your favorite JavaScript framework:</h3>
 					
 					<ul>
 						<li class="jquery"><a href="http://jsfiddle.net/cfCk8/">jQuery</a></li>
@@ -63,144 +94,59 @@
 					</ul>
 					
 				</div>
-				
-				<navigation>
-					<ul class="navigation">
-					
-					</ul>
-				</navigation>
 			
 			</div>
 			
 		</div>
 		
-		<section class="content">
-			
-			<div class="content">
-				<p>
-					Eve.js works on top of your existing JavaScript framework
-					to provide <em>five simple methods</em> which allow you to
-					effortlessly write well-organized, robust rich Internet
-					applications using the same framework-based code you're
-					already used to.
-				</p>
-			</div>
-			
-		</section>
-		
-		
-		<section id="features" class="content">
-			
-			<h1>Features</h1>
-			
-			<div class="content">
-				
-				<h2>Backwards Compatibility</h2>
-				
-				<p>
-					Eve.js is fully compatible with <em>all legacy
-					JavaScript applications</em>, meaning there's no need to 
-					rewrite a single line of code to get
-					started.  
-				</p>
-				
-				<p>
-					Since it <em>works on top of your existing framework 
-					library</em>, you'll be able to continue to write code
-					the way you're used to, just less of it!
-				</p>
-				
-				<h2>Painless Maintenance</h2>
-				
-				<p>
-					Eve.js takes the guesswork out of code maintenance, saving
-					you time and money.
-				</p>
-				
-				<h2>Omniscient Debugging</h2>
-				
-				<p>
-					By enabling Eve's debug mode, you'll receive a <em>real-time
-					log</em> of all events as they're being triggered, along with
-					the name of the module in effect.
-				</p>
-				
-				<h2>Powerful</h2>
-				
-				<p>
-					Because Eve.js takes the hassle out of organizing and
-					managing complex applications, it's possible to 
-					<em>dramatically
-					reduce</em> the amount of code necessary to implement new
-					features.
-				</p>
-				
-				<h2>Minimalist</h2>
-				
-				<p>
-					Eve.js weighs in at <em>less than 3KB</em> when 
-					properly compressed, making load time negligible.
-				</p>
-				
-				<p>
-					Additionally, a small codebase means a small API.
-					With only a handful of simple methods to learn, you can
-					master Eve in less than an hour.
-				</p>
-				
-				<h2>Automatic Event Delegation</h2>
-				
-				<p>
-					Don't worry if you don't understand what event delegation
-					is&mdash;Eve handles it automatically!
-				</p>
-				
-				<p>
-					Using Eve, you'll never have to worry about reattaching
-					events to elements after an AJAX call or a dynamic update
-					of the page.
-				</p>
-				
-				<h2>Portable</h2>
-				
-				<p>
-					No need to worry that you'll get used to the amazing power
-					of Eve.js and then have to give it up for a new job or
-					project.
-				</p>
-				<p>
-					Since Eve <em>works with all major frameworks</em>, you'll
-					be able to keep using it no matter what your next
-					environment might be like.
-				</p>
-				
-			</div>
-			
-		</section>
 		<section id="examples" class="content">
 			
-			<h1>Examples</h1>
-				
 			<div class="content">
 				
 			<div class="example">
 				
-				<h2>Scoping</h2>
-				
+				<h2>Three Simple Methods</h2>
+
 				<p>
-					The below code scopes everything within the function to
-					the <code>.hello-world</code> namespace within the DOM.
+					The vast majority of the power of Eve.js can be unlocked by
+					chaining together three simple methods: <code>scope</code>,
+					<code>find</code>, and <code>listen</code>:
 				</p>
-				
-				<p>
-					Eve then binds two useful methods to the function: 
-					<code>listen</code> and <code>attach</code>.  These
-					methods ensure that all actions within the function are
-					scoped to the parent (<code>.hello-world</code>) DOM 
-					namespace.
-				</p>
-				
-				<script src="https://gist.github.com/2388452.js?file=eve-hello-world.js"></script>
+<pre><code>//Everything within this function will automatically be scoped
+//to the .slideshow parent namespace.
+Eve.scope('.slideshow', function() {
+
+    //This will listen for clicks on any element on the page
+    //matching the CSS selector ".slideshow .advance"
+    this.listen('.advance', 'click', function(e) {
+
+        //.find will only return elements matching '.current'
+        //within the parent .slideshow element which was
+        //clicked on.
+        this.find('.current')
+            .removeClass('.current');
+            .getNext().addClass('current');
+
+    });
+
+    //Scope methods are recursive, which means you can create a
+    //scope inside of a parent scope.
+    this.scope('.controls', function() {
+
+        //This will look for any click events on the page matching
+        //".slideshow .controls .hide_controls".
+        this.listen('.hide_controls', function() {
+
+            //.find with no arguments will return the parent
+            //namespace, in this case the .controls parent
+            //of the .hide_controls element that was clicked on.
+            this.find().addClass('hidden');
+
+        });
+
+    });
+
+});</pre></code>
 				
 			</div>
 			
@@ -209,310 +155,126 @@
 				<h2>Reusable Modules</h2>
 				
 				<p>
-					Eve allows you to create reusable modules which you can 
-					then <code>attach</code> to any scoped function or
-					CSS namespace.
+				Additionally, you can create reusable modules which can then be
+				attached to several CSS namespaces at once, providing for powerful
+				and adaptive code reuse.
 				</p>
 				
-				<script src="https://gist.github.com/2389510.js?file=eve-attach.js"></script>
-				
-				<script src="https://gist.github.com/2389442.js?file=eve-scoped-attach.js"></script>
-				
+				<pre><code>//In this case, the first argument isn't a CSS namespace, but
+//the name others will use to refer to this module in the future.
+Eve.register('jimsSlideshow', function() {
+
+    //This will look for anything matching attached namespaces,
+    //although we don't know what those namespaces will be yet.
+    this.listen('.advance', 'click', function(e) {
+
+        this.find('.current')
+            .removeClass('.current')
+            .getNext().addClass('current');
+
+    });
+
+});
+
+//this.listen('.advance') above will now match the CSS selector
+//".main-image-feature .advance"
+Eve.attach('jimsSlideshow', '.main-image-feature');
+
+//Now, a second module will start listening to clicks on
+//elements matching '#sidebar-slideshow .advance'.
+Eve.attach('jimsSlideshow', '#sidebar-slideshow');
+</pre></code>
 			</div>
 			
+			<div class="example">
+
+				<h2>Extending Eve</h2>
+
+				<p>
+					Oh no!  Our boss just told us that we can't use CSS
+					classes or IDs for JavaScript functionality anymore!
+				</p>
+				<p>
+					Now everywhere we would normally look for something like
+					<code>.advance</code>, we have to type <code>[data-action=advance]</code>!
+					What a bummer!
+				</p>
+				<p>
+					No problem, let's just extend Eve to do it for us:
+				</p>
+				<pre><code>//Attach a new .handle method to the Scope object,
+//so that it will be available within any Eve.js scope.
+Eve.extend('handle', function(action,evt,fun) {
+
+    this.listen("[data-action="+action+"]", evt, fun);
+
+});
+
+Eve.scope('.slideshow', function() {
+
+    //Now we can use the handle method below instead of typing out
+    //this.listen("[data-action=advance]", 'click', function);
+    this.handle('advance', 'click', function(e) {
+
+        this.find('.current')
+            .removeClass('.current')
+            .getNext().addClass('current');
+
+    });
+
+});
+
+</pre></code>
+			</div>
+			
+			<div class="example">
+
+				<h2>Attach Scopes to Dynamically Inserted Content</h2>
+				
+				<p>Eve.js automatically adjusts to changing DOM 
+				structures, meaning you can <em>scope things before they
+				even exist</em>.</p>
+				
+				<p>
+					Eve makes it so easy to handle changes to the content of your page
+					that the code example to do so is exactly <em>zero lines</em>:
+				</p>
+
+				<pre><code>//This code example intentionally left blank.
+</pre></code>
+			</div>
+
+
+			<div class="example">
+
+				<h2>Automatic Debugging</h2>
+
+				<p>
+					Ever spelunk through thousands
+					of lines of code to find the line responsible for some weird bug?
+				</p>
+				<p>
+					With <code>Eve.debug</code>, you can automatically log any event
+					as it's triggered along with the module responsible.
+				</p>
+				<pre><code>//Now click on things and watch the console!
+Eve.debug();
+
+//You can also debug just specific namespaces.
+Eve.debug('.slideshow');
+
+//Or modules.
+Eve.debug('jimsSlideshow');
+</pre></code>
+			</div>
+			
+			<p class="api-cta">
+				<a href="http://github.com/Yuffster/Eve.js/blob/master/docs/API_Documentation.md" class="api-cta">Complete API Documentation</a>
+			</p>
 			
 			</div>
+			
 			
 		</section>
-		
-		
-		<section id="documentation" class="content">
-			
-			<h1>Documentation</h1>
-			
-			<div class="content">
-				
-	<h2>Global Methods</h2>
-				
-			<h3>Eve.scope</h3>
-				
-				<p>
-					Scopes the given function to a particular CSS namespace.
-					Eve attaches <code>listen</code> and
-					<code>attach</code> methods to each scoped function.
-					When calling these methods from within the function, 
-					you'll automatically remain within the scoped
-					namespace.
-				</p>
-				
-			<h4>Syntax</h4>
-				
-				<p class="syntax">
-					Eve.scope(<code>namespace</code>, <code>function</code>);
-				</p>
-				
-			<h4>Arguments</h4>
-				
-				<ul class="arguments">
-					<li>
-						<code>namespace</code> (string): The CSS selector of
-						the elements which will be effected by the provided
-						function.
-					</li>
-					<li>
-						<code>function</code> (function): This function
-						will be responsible for all code related to the
-						given CSS namespace.
-					</li>
-
-				</ul>
-				
-			<h4>Example</h4>
-				
-				<script src="https://gist.github.com/2388452.js?file=eve-hello-world.js"></script>
-				
-		<h3>Eve.register</h3>
-				
-				<p>
-					Allows you to register a reusable module which can then
-					be utilized via the <code>attach</code> method.
-					Module functions have no default namespace of their own,
-					and instead will rely on the namespace provided when
-					attaching.
-				</p>
-				
-			<h4>Syntax</h4>
-				
-				<p class="syntax">
-					Eve.register(<code>moduleName</code>, <code>function</code>);
-				</p>
-				
-			<h4>Arguments</h4>
-				
-				<ul class="arguments">
-					<li>
-						<code>moduleName</code> (string): The name of the 
-						module.  This can be anything, as long as it's 
-						unique.
-					</li>
-					<li>
-						<code>function</code> (function): This function
-						will be run within a scoped namespace when
-						attached.  Note: this function will only run ONCE
-						per namespace.
-					</li>
-
-				</ul>
-				
-			<h4>Example</h4>
-				
-				<script src="https://gist.github.com/2389413.js?file=eve-register.js"></script>
-				
-		<h3>Eve.attach</h3>
-				
-				<p>
-					Attaches a previously registered module to the specified
-					CSS namespace.
-				</p>
-				
-			<h4>Syntax</h4>
-				
-				<p class="syntax">
-					Eve.attach(moduleName, namespace);
-				</p>
-				
-			<h4>Arguments</h4>
-				
-				<ul class="arguments">
-					<li>
-						<code>moduleName</code> (string): The name of the 
-						module to attach.  It must have previously been
-						registered using <code>Eve.register</code>.
-					</li>
-					<li>
-						<code>namespace</code> (string): The CSS selector of
-						the elements which will be effected by the named
-						module.
-					</li>
-				</ul>
-				
-			<h4>Example</h4>
-				
-				<script src="https://gist.github.com/2389510.js?file=eve-attach.js"></script>
-				
-		<h3>Eve.debug</h3>
-				
-				<p>
-					Logs detailed information concerning event execution
-					and responsible modules to to the console.
-				</p>
-				
-			<h4>Syntax</h4>
-				
-				<p class="syntax">
-					Eve.debug([<code>moduleName</code>]);
-				</p>
-				
-			<h4>Arguments</h4>
-				
-				<ul class="arguments">
-					<li>
-						<code>moduleName</code> (optional): If a module
-						name is provided, only events the given module is
-						listening to will be logged.  If no moduleName is
-						provided, all events will be logged to the console.
-					</li>
-				</ul>
-				
-			<h4>Example</h4>
-				
-				<script src="https://gist.github.com/2389482.js?file=eve-debug.js"></script>
-				
-	<h2>Scoped Methods</h2>
-				
-				<p>
-					Eve attaches two methods to each scoped function attached
-					via <code>Eve.scope</code> or <code>Eve.register</code>.
-					When calling these methods from within the function, 
-					you'll automatically remain within the scoped
-					namespace.
-				</p>
-				
-		<h3>listen</h3>
-				
-				<p>
-					Begins watching for events which match the particular
-					eventType and CSS selector, as long as the given CSS
-					selector is part of the parent namespace.
-				</p>
-				
-			<h4>Syntax</h4>
-				
-				<p class="syntax">
-					this.listen([<code>selector</code>,] <code>eventType</code>, <code>handler</code>);
-				</p>
-				
-			<h4>Arguments</h4>
-				
-				<ul class="arguments">
-					<li>
-						<code>selector</code> (string, optional): The CSS selector  of the 
-						elements you want to attach events to.  If no selector
-						is given, any event of the given type within the
-						scoped namespace will invoke the handler.
-					</li>
-					<li>
-						<code>eventType</code> (string): The event type, such as click or
-						mouseover.
-					</li>
-					<li>
-						<code>handler</code> (function): The function to call when the
-						specified event type has taken place on a matching
-						element.
-					</li>
-				</ul>
-				
-			<h4>Example</h4>
-				
-				<script src="https://gist.github.com/2389442.js?file=eve-scoped-attach.js"></script>
-				
-		<h3>find</h3>
-				
-				<p>
-					Finds elements from within the context of the current
-					scoped instance. If called from a scope, find will return
-					all elements matching the given selector within the parent
-					 namespace. If called from an event (listen) handler, only
-					 elements within the same instance of the parent scope
-					from which the event has been called will be returned.
-				</p>
-				
-			<h4>Syntax</h4>
-				
-				<p class="syntax">
-					this.find(<code>selector</code>);
-				</p>
-				
-			<h4>Arguments</h4>
-				
-				<ul class="arguments">
-					<li>
-						<code>selector</code> (string): A CSS selector.  If no
-						selector is provided, the parent namespace will be
-						returned.
-					</li>
-				</ul>
-				
-				<h4>Example</h4>
-				
-				<script src="https://gist.github.com/2426170.js?file=eve_find.js"></script>
-				
-				
-		<h3>attach</h3>
-				
-				<p>
-					Works exactly like <code>Eve.attach</code>, but will 
-					confine the attached module to the current scope.
-				</p>
-				
-				
-			<h4>Example</h4>
-				
-				<script src="https://gist.github.com/2389442.js?file=gistfile1.txt"></script>
-				
-				
-			</div>
-			
-		</section>
-			
-		<section id="community" class="content">
-			
-			<h1>Development Community</h1>
-			
-			<div class="content">
-				<p>
-					Questions? Comments?
-					<a href="http://webchat.freenode.net/?channels=#eve.js">
-						Visit us on Freenode
-					</a> in 
-					<code>#Eve.js</code>.
-				</p>
-				
-				<p>You can also
-					<a href="http://github.com/Yuffster/Eve.js/">
-						Fork us on GitHub</a>.
-				</p>
-			</div>
-			
-		</section>
-			
-		</div>
-	
-		<style type="text/css">
-			@import url('styles/gist.css');
-		</style>
-		
-		<script>
-			/* Automatically update the version number until I have time to
-			   make the site more dynamic.
-			 */
-			(function() {
-				
-				function jsonp(url,callback) {
-				    var cbname = 'callback_'+Math.random().toString(36).substring(7)+new Date().getTime();
-				    url = (url.match(/\?/)) ? url+'&callback='+cbname : url+'?callback='+cbname;
-				    window[cbname] = callback;
-				    var s = document.createElement('script');
-				    s.src = url;
-				    document.getElementsByTagName('head')[0].appendChild(s);
-				};
-
-				jsonp('https://api.github.com/repos/Yuffster/eve.js/tags', function(d) { 
-				    document.getElementById('latest-version').innerHTML = d.data[0].name;
-				});
-				
-			})();
-		</script>
-	
 	</body>
 </html>

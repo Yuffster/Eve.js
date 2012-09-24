@@ -123,6 +123,7 @@ i {
 }
 
 #top .content {
+	position:relative;
 	padding:10px 0;
 	background: url('i/eve_bg.png') no-repeat left bottom;
 }
@@ -130,6 +131,7 @@ i {
 /* Logo */
 #top h1 {
 	margin: 0;
+	margin-top:20px;
 	text-indent: -999em;
 	outline:none;
 	width:255px;
@@ -140,6 +142,7 @@ i {
 
 #top h2 {
 	display:none;
+	text-align:center;
 }
 
 /* Download butotn */
@@ -148,6 +151,26 @@ i {
 	position:absolute;
 	right:0;
 	top:30px;
+	text-align:center;
+}
+
+#top .github-cta .btn {
+	overflow:hidden;
+	padding-bottom:0px;
+	margin-bottom:4px;
+} 
+
+#top .github-cta .btn i {
+	height:32px;
+	width:32px;
+	margin-left: 10px;
+	display:inline-block;
+	background: url('i/icon_github.png') no-repeat;
+}
+#top .github-cta .btn span {
+	display:block;
+	float:left;
+	line-height:32px;
 }
 
 #top .github-cta .version {
@@ -194,9 +217,25 @@ i {
 	font-size: 10px;
 }
 
+#top .learn-cta,.api-cta {
+	margin:auto;
+	text-align:center;
+	text-shadow: 1px 1px 0 #000;
+	font-size: 24px;
+	text-shadow:1px;
+}
+
+.api-cta {
+	margin-top:50px;
+}
+
+#top .learn-cta a:hover,.api-cta a:hover {
+	color: #c7471c;
+}
+
 /* Blurb */
 
-#top .blurb {
+#top .blurb,.framework-support h3 {
 	font-size: 24px;
 	color: #daeaff;
 	width:80%;
@@ -204,9 +243,24 @@ i {
 	line-height:120%;
 }
 
+.lt3,code {
+	font-family:Monaco, monospace;
+}
+
+.framework-support h3 {
+	margin: 0px auto;
+	font-size: 10px;
+	text-align:center;
+}
+
+
 #top .blurb em {
 	color:#fff;
 	text-shadow: 1px 1px 0 #000;
+}
+
+#top .blurb p {
+	margin-bottom:24px;
 }
 
 #top .example {
@@ -222,14 +276,14 @@ i {
 /* Kickstart */
 
 #top .kickstart {
-	margin-bottom:80px;
+	margin-bottom:50px;
 }
 
-#top .kickstart h3 {
+#top .kickstart h3,#examples h1 {
 	font-size:32px;
 	text-shadow: 2px 2px 0 #000;
 	text-align:center;
-	margin-bottom:30	px;
+	margin-bottom:30px;
 }
 
 #top .kickstart p {
@@ -250,6 +304,10 @@ i {
 	text-decoration:none;
 }
 
+#top .kickstart .terminal a:hover {
+	color: #c7471c;
+}
+
 #top .kickstart .prompt {
 	color: #777;
 }
@@ -258,8 +316,9 @@ i {
 
 #top .framework-support h3 {
 	text-align:center;
-	font-size:20px;
+	font-size:18px;
 	text-shadow: 1px 1px 0 #000;
+	margin: 0 auto;
 }
 
 #top .framework-support ul {
@@ -313,6 +372,105 @@ i {
 	
 }
 
+
+/* Nav */
+
+li:hover ul.navigation {
+	-moz-box-shadow: 3px 3px 4px #000;
+	-webkit-box-shadow: 3px 3px 4px #000;
+	box-shadow: 3px 3px 4px #000;
+	/* For IE 8 */
+	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#000000')";
+	/* For IE 5.5 - 7 */
+	filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#000000');
+}
+
+nav#main-nav {
+	background:#000;
+	width:100%;
+	z-index:999;
+}
+
+#main-nav ul.navigation {
+	width:970px;
+	margin:auto;
+}
+
+ul.navigation,ul.navigation ul {
+	background:#000;
+}
+
+ul.navigation ul li {
+	display:block;
+	padding:0;
+}
+
+ul.navigation li {
+	padding-top:10px;
+	position:relative;
+	display: inline-block;
+	margin-bottom:1px;
+	white-space: nowrap;
+	padding: 10px 10px 0 10px;
+	border-bottom:3px solid transparent;
+}
+
+ul.navigation li ul {
+	position:absolute;
+	top: 28px;
+	left:-10px;
+	z-index:999;
+	padding-top:3px;
+	padding-left:20px;
+	display:none;
+}
+
+ul.navigation li ul li {
+	height:24px;
+	padding-right:35px;
+}
+
+ul.navigation a {
+	color: #fff;
+	display:inline-block;
+}
+
+ul.navigation > li.active {
+	border-bottom: 3px solid #c7471c;
+}
+
+ul.navigation > li:hover > a {
+	color: #DCBC45;
+}
+
+ul.navigation ul li:hover > a {
+	color: #ccc;
+}
+
+ul.navigation li:hover ul {
+	display:block;
+}
+
+ul.navigation li.right {
+	float:right;
+	margin-right:0;
+	padding-right:0;
+}
+
+ul.navigation li.download > a {
+	overflow:hidden;
+	display:inline-block;
+	height:16px;
+	padding-right:24px;
+	background:url(./i/icon_download_16.png) right 0 no-repeat;
+}
+
+ul.navigation li.download:hover >  a {
+	color: #c7471c;
+	background-position: right 66%;
+}
+
+
 /* Main body */
 
 h1 {
@@ -352,7 +510,7 @@ section p {
 	line-height: 125%;
 }
 
-section code,section em {
+section em,section p code {
 	color: #fff;
 	text-shadow: 1px 1px 1px #000;
 }
@@ -379,4 +537,8 @@ ul.arguments li {
 #documentation .syntax {
 	margin-left:20px;
 	font-size:12pt;
+}
+
+pre code {
+	font-size:16px;
 }
