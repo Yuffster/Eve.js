@@ -1,4 +1,5 @@
 function wait(con, fun, max) {
+	max = max || 5000;
 	var waiter = setInterval(function() {
 		if(con()) {
 			fun();
@@ -6,8 +7,10 @@ function wait(con, fun, max) {
 		}
 	}, 100);
 	setTimeout(function() {
+		console.log("Failed: Stopped waiting for tests to complete after "+max+"ms.");
+		phantom.exit(1);
 		clearInterval(waiter);
-	}, max || 5000);
+	}, max);
 };
 
 var page = new WebPage(), options = phantom.args[0] || "", 
