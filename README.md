@@ -49,7 +49,7 @@ The vast majority of the power of Eve.js can be unlocked by chaining together th
 			//within the parent .slideshow element which was
 			//clicked on.
 			this.find('.current')
-				.removeClass('.current');
+				.removeClass('.current')
 				.getNext().addClass('current');
 
 		});
