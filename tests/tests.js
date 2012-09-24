@@ -113,8 +113,27 @@
 		Eve.scope('#m2', function() {
 			
 			var result = this.find();
-			ok(result.getAttribute('id') == 'm2', "Found the expected element.");
+			if (result.getDOMNodes) result = result.getDOMNodes();
+			ok(result[0].getAttribute('id') == 'm2', "Found the expected element.");
 			
+		});
+		
+		Eve.scope('.list-module', function() {
+			var result = this.find();
+			if (result.getDOMNodes) result = result.getDOMNodes();
+			ok(result.length == 2, "Two parent namespace nodes returned.");
+		});
+		
+	});
+	
+	test(".first should return the first of matching items", function() {
+		
+		Eve.scope('#m2', function() {
+			ok(this.first().getAttribute('id') == 'm2', "Found the expected element.");
+		});
+		
+		Eve.scope('.list-module', function() {
+			ok(this.first().getAttribute('id') == 'm1', "Correct parent namespace nodes returned.");
 		});
 		
 	});

@@ -199,43 +199,26 @@ var Scope = {
 	},
 	
 	find: function(sel) {
-		var scope, result, s;
+		var scope, ns = this.namespace;
 		if (!sel || typeof(sel)=='string') { sel = (sel || '').trim(); }
 		//Scope to the particular instance of the DOM module active in this
 		//event.
-		if (this.event) {
-			var t = this.event.target;
-			if (using('jQuery')) t = jQuery(t);
-			var map = {
-				jQuery: ['is', 'parents', 'find'],
-				MooTools: ['match', 'getParent', 'getElements'],
-				Prototype: ['match', 'up', 'select'],
-				YUI: ['test', 'ancestor', 'all']
-			};
-			for (var fw in map) {
-				if (!using(fw)) continue;
-				var m = map[fw], match = m[0], up = m[1], all = m[2];
-				if (t[match](this.namespace)) return t;
-				scope = t[up](this.namespace);
-				return (sel) ? scope[all](sel) : scope;
-			}
-			if (using('dojo')) {
-				//Dojo returns the current node if it matches the selector.
-				scope = _dom(t).closest(this.namespace);
-				return (sel) ? scope.query(sel) : scope;
-			}
-		//Scope to the DOM namespace across all instances.
-		} else {
-			s = this.namespace+' '+sel;
-			if (using('jQuery')) {
-				result = $(s);
-			} else if (using('MooTools')||using('Prototype')) {
-				result = $$(s);
-			} else if (using('dojo')) {
-				result = _dom(document.body).query(s);
-			} else if (using('YUI')) {
-				result = _dom(document.body).all(s);
-			} return (sel) ? result : this.first(s, result);
+		var t  = (this.event) ? this.event.target : document.body;
+		if (using('jQuery')) t = jQuery(t);
+		if (_dom) t = _dom(t);
+		var map = {
+			jQuery: ['is', 'parents', 'find'],
+			MooTools: ['match', 'getParent', 'getElements'],
+			Prototype: ['match', 'up', 'select'],
+			YUI: ['test', 'ancestor', 'all'],
+			dojo: ['', 'closest', 'query']
+		};
+		for (var fw in map) {
+			if (!using(fw)) continue;
+			var m = map[fw], match = m[0], up = m[1], all = m[2];
+			if (!using('dojo')&&t[match](ns)) return t;
+			scope  = (this.event) ? t[up](ns) : t;
+			return (this.event) ? scope[all](sel) : scope[all](ns+' '+sel);
 		}
 	},
 	
