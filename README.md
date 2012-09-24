@@ -1,4 +1,4 @@
-# Eve.JS
+# [Eve.JS](http://evejs.com)
 
 [![Build Status](https://secure.travis-ci.org/Yuffster/Eve.js.png)](http://travis-ci.org/Yuffster/Eve.js)
 
@@ -10,7 +10,7 @@ A <3kb JavaScript file providing three simple methods to organize code into CSS 
 
 The latest stable minified library version lives at <http://evejs.com/stable/eve.min.js>.
 
-## Test Suite
+## Running the Unit Tests
 
 To run the complete test suite, point your browser locally to the `run_tests.html` file.  This will run
 a full barrage of tests for each supported framework in its own isolated environment.
