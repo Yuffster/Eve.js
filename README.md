@@ -2,312 +2,140 @@
 
 [![Build Status](https://secure.travis-ci.org/Yuffster/Eve.js.png)](http://travis-ci.org/Yuffster/Eve.js)
 
-The featherweight JavaScript meta-framework which hooks into any major JavaScript library to make scoped event delegation and modular encapsulation automatic and painless.
+A `<3kb` JavaScript file providing `three simple methods` to organize code into CSS namespaces which `magically restrict code to the current context`, allowing for `dramatic reductions to code size and development time`. 
 
 <http://evejs.com>
 
 ## Installation
 
-Eve.js only has one runtime file: `eve.js`.  The rest of this repository contains support files and tests.
+The latest stable minified library version lives at <http://evejs.com/stable/eve.min.js>.
 
-You can access the latest stable version of this file from <http://evejs.com/stable/eve.js>.
-
-## Testing
+## Test Suite
 
 To run the complete test suite, point your browser locally to the `run_tests.html` file.  This will run
 a full barrage of tests for each supported framework in its own isolated environment.
 
-## Examples 
+Tests may be run from the command line with `./run_tests.sh`.  ([PhantomJS](http://phantomjs.org/) required.)
 
-An example file for each supported framework has been provided in the examples directory.
+## Three Simple Methods
 
-### Scoping
+The vast majority of the power of Eve.js can be unlocked by chaining together three simple methods: scope, find, and listen:
 
-The below code scopes everything within the function to the .hello-world namespace within the DOM.
+	//Everything within this function will automatically be scoped
+	//to the .slideshow parent namespace.
+	Eve.scope('.slideshow', function() {
 
-Eve then binds two useful methods to the function: listen and attach. These methods ensure that all actions within the function are scoped to the parent (.hello-world) DOM namespace.
+		//This will listen for clicks on any element on the page
+		//matching the CSS selector ".slideshow .advance"
+		this.listen('.advance', 'click', function(e) {
 
-	Eve.scope('.hello-world', function() {
+			//.find will only return elements matching '.current'
+			//within the parent .slideshow element which was
+			//clicked on.
+			this.find('.current')
+				.removeClass('.current');
+				.getNext().addClass('current');
 
-	    this.listen('div.line', 'click', function(e) {
-	        console.log("You clicked on .hello-world div.line");
-	    });
-
-	});
-
-Eve.attach('myAwesomePlugin', '#section-of-site');
-
-### Reusable Modules
-
-Eve allows you to create reusable modules which you can then attach to any scoped function or CSS namespace.
-
-#### Scoping to a Namespace
-
-	Eve.register('myAwesomePlugin', function() {
-
-	    this.listen('a', 'click', function() {
-	        console.log("You clicked on a link within my namespace!");
-	    });
-
-	});
-
-	Eve.attach('myAwesomePlugin', '#section-of-site');
-	
-#### Recursive Scoping to a Scoped Function
-
-	Eve.register('myAwesomePlugin', function() {
-
-	    this.listen('a', 'click', function() {
-	        console.log("You clicked on a link within my namespace!");
-	    });
-
-	});
-
-	Eve.scope('#section-of-my-site', function() {
-
-	    //This will attach the named module to the namespace of
-	    //"#section-of-my-site .subsection".
-	    this.attach('myAwesomePlugin', '.subsection');
-
-	});
-	
-## Documentation
-
-### Global Methods
-
-#### Eve.scope
-
-Scopes the given function to a particular CSS namespace. Eve attaches listen and attach methods to each scoped function. When calling these methods from within the function, you'll automatically remain within the scoped namespace.
-
-##### Syntax
-
-Eve.scope(namespace, function);
-
-##### Arguments
-
-- namespace (string): The CSS selector of the elements which will be effected by the provided function.
-- function (function): This function will be responsible for all code related to the given CSS namespace.
-
-##### Example
-
-	Eve.scope('.hello-world', function() {
-
-	    this.listen('div.line', 'click', function(e) {
-	        console.log("You clicked on .hello-world div.line");
-	    });
-
-	});
-
-#### Eve.register
-
-Allows you to register a reusable module which can then be utilized via the attach method. Module functions have no default namespace of their own, and instead will rely on the namespace provided when attaching.
-
-##### Syntax
-
-Eve.register(moduleName, function);
-
-##### Arguments
-
-- moduleName (string): The name of the module. This can be anything, as long as it's unique.
-- function (function): This function will be run within a scoped namespace when attached. Note: this function will only run ONCE per namespace.
-
-##### Example
-
-	Eve.register('myAwesomePlugin', function() {
-
-	    this.listen('a', 'click', function() {
-	        console.log("You clicked on a link within my namespace!");
-	    });
-
-	    //Since no namespace is provided, this event will be triggered by
-	    //any click events within the scoped namespace.
-	    this.listen('click', function() {
-	        alert("You clicked somewhere within my namespace!");
-	    });
-
-	});
-
-
-	//Now, we're giving the module a scoped namespace to work with,
-	//effectively attaching events to "#section-of-my-site" and
-	//"#section-of-my-site a".
-	Eve.attach('myAwesomePlugin', '#section-of-site');
-
-#### Eve.extend
-
-Provides a method of extending Eve.js's native scoped methods with custom ones.
-
-##### Syntax
-
-Eve.extend(methodName, function);
-
-##### Arguments
-
-- methodName (string): The name of the new Eve.js scoped method.
-- function (function): The function to be executed when the new scoped method is called.
-
-##### Example
-
-	Eve.extend('handle', function(key, e, fun) {
-		//this.listen will be limited to the scope of the code which called
-		//the handle method.
-		this.listen('[data-action='+key+']', e, fun);
-	});
-
-	Eve.scope('.extended-area', function() {
-	
-		//Handle is now available within this scope.
-		this.handle('bing', 'click', function(e) {
-			e.target.innerHTML = 'Bing';
 		});
+
+		//Scope methods are recursive, which means you can create a
+		//scope inside of a parent scope.
+		this.scope('.controls', function() {
+
+			//This will look for any click events on the page matching
+			//".slideshow .controls .hide_controls".
+			this.listen('.hide_controls', function() {
+
+				//.find with no arguments will return the parent
+				//namespace, in this case the .controls parent
+				//of the .hide_controls element that was clicked on.
+				this.find().addClass('hidden');
+
+			});
+
+		});
+
+	});
+
+## Reusable Modules
+
+Additionally, you can create reusable modules which can then be attached to several CSS namespaces at once, providing for powerful and adaptive code reuse.
+
+	//In this case, the first argument isn't a CSS namespace, but
+	//the name others will use to refer to this module in the future.
+	Eve.register('jimsSlideshow', function() {
+
+		//This will look for anything matching attached namespaces,
+		//although we don't know what those namespaces will be yet.
+		this.listen('.advance', 'click', function(e) {
+
+			this.find('.current')
+				.removeClass('.current')
+				.getNext().addClass('current');
+
+		});
+
+	});
+
+	//this.listen('.advance') above will now match the CSS selector
+	//".main-image-feature .advance"
+	Eve.attach('jimsSlideshow', '.main-image-feature');
+
+	//Now, a second module will start listening to clicks on
+	//elements matching '#sidebar-slideshow .advance'.
+	Eve.attach('jimsSlideshow', '#sidebar-slideshow');
+
+## Extending Eve
+
+Oh no! Our boss just told us that we can't use CSS classes or IDs for JavaScript functionality anymore!
+
+Now everywhere we would normally look for something like .advance, we have to type [data-action=advance]! What a bummer!
+
+No problem, let's just extend Eve to do it for us:
+
+	//Attach a new .handle method to the Scope object,
+	//so that it will be available within any Eve.js scope.
+	Eve.extend('handle', function(action,evt,fun) {
 	
-	});
-
-#### Eve.attach
-
-Attaches a previously registered module to the specified CSS namespace.
-
-##### Syntax
-
-Eve.attach(moduleName, namespace);
-
-##### Arguments
-
-- moduleName (string): The name of the module to attach. It must have previously been registered using Eve.register.
-- namespace (string): The CSS selector of the elements which will be effected by the named module.
-
-##### Example
-
-	Eve.register('myAwesomePlugin', function() {
-
-	    this.listen('a', 'click', function() {
-	        console.log("You clicked on a link within my namespace!");
-	    });
-
-	});
-
-	Eve.attach('myAwesomePlugin', '#section-of-site');
-
-#### Eve.debug
-
-Logs detailed information concerning event execution and responsible modules to to the console.
-
-##### Syntax
-
-Eve.debug([moduleName]);
-
-##### Arguments
-
-- moduleName (optional): If a module name is provided, only events the given module is listening to will be logged. If no moduleName is provided, all events will be logged to the console.
-
-##### Example
-
-	Eve.debug('myAwesomeModule');
-
-### Scoped Methods
-
-Eve attaches two methods to each scoped function attached via Eve.scope or Eve.register. When calling these methods from within the function, you'll automatically remain within the scoped namespace.
-
-#### listen
-
-Begins watching for events which match the particular eventType and CSS selector, as long as the given CSS selector is part of the parent namespace.
-
-##### Syntax
-
-this.listen([selector,] eventType, handler);
-
-##### Arguments
-
-- selector (string, optional): The CSS selector of the elements you want to attach events to. If no selector is given, any event of the given type within the scoped namespace will invoke the handler.
-- eventType (string): The event type, such as click or mouseover.
-- handler (function): The function to call when the specified event type has taken place on a matching element.
-
-##### Example
-
-	Eve.scope('#section-of-my-site', function() {
-
-	    this.listen('a', 'click', function() {
-	        console.log("You clicked on a link within my namespace!");
-	    });
-
-	});
-	
-#### attach
-
-Works exactly like Eve.attach, but will confine the attached module to the current scope.
-
-##### Example
-
-	Eve.register('myAwesomePlugin', function() {
-
-	    this.listen('a', 'click', function() {
-	        console.log("You clicked on a link within my namespace!");
-	    });
-
-	});
-
-	Eve.scope('#section-of-my-site', function() {
-
-	    //This will attach the named module to the namespace of
-	    //"#section-of-my-site .subsection".
-	    this.attach('myAwesomePlugin', '.subsection');
-
-	});
-
-#### find
-
-Finds elements from within the context of the current scoped instance. If called from a scope, find will return all elements matching the given selector within the parent namespace.  If called from an event (listen) handler, only elements within the same instance of the parent scope from which the event has been called will be returned.
-
-##### Syntax
-
-this.find(selector);
-
-##### Arguments
-
-- selector (string): A CSS selector.
-
-##### Example
-
-	Eve.scope('.image-slideshow', function() {
-
-		//Will return all .image-slideshow img items.
-		this.find('img');
+		this.listen("[data-action="+action+"]", evt, fun);
 		
-	    this.listen('a', 'click', function() {
+	});
+	
+	Eve.scope('.slideshow', function() {
+	
+		//Now we can use the handle method below instead of typing out
+		//this.listen("[data-action=advance]", 'click', function);
+		this.handle('advance', 'click', function(e) {
 		
-			// Only returns img.active items within the current
-			// .image-slideshow element.
-	        this.find('img.active');
-	
-	    });
-
+			this.find('.current')
+				.removeClass('.current')
+				.getNext().addClass('current');
+				
+		});
+		
 	});
+
+## Attach Scopes to Dynamically Inserted Content
+
+Eve.js automatically adjusts to changing DOM structures, meaning you can scope things before they even exist.
+
+Eve makes it so easy to handle changes to the content of your page that the code example to do so is exactly zero lines:
+
+	//This code example intentionally left blank.
+
+## Automatic Debugging
+
+Ever spelunk through thousands of lines of code to find the line responsible for some weird bug?
+
+With Eve.debug, you can automatically log any event as it's triggered along with the module responsible.
+
+	//Now click on things and watch the console!
+	Eve.debug();
 	
-#### first
+	//You can also debug just specific namespaces.
+	Eve.debug('.slideshow');
+	
+	//Or modules.
+	Eve.debug('jimsSlideshow');
 
-An alias of `.find` which only returns the first result.
-
-##### Syntax
-
-this.first(selector);
-
-##### Arguments
-
-- selector (string): A CSS selector.
-
-##### Example
-
-	Eve.scope('.image-slideshow', function() {
-
-		//Will return all .image-slideshow img items.
-		this.find('img');
-
-	    this.listen('a', 'click', function() {
-
-			// Only returns img.active items within the current
-			// .image-slideshow element.
-	        this.first('img.active');
-
-	    });
-
-	});
+[Complete API Documentation]()
