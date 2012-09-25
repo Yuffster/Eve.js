@@ -2,6 +2,8 @@
 	
 	//We'll grab the frameworks from CDNs.
 	var frameworks = {
+		eve       : "../src/eve.js",
+		'eve.min' : "../eve.min.js",
 		mootools  : "http://ajax.googleapis.com/ajax/libs/mootools/1.4.5/mootools-yui-compressed.js",
 		jquery	  : "http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js",
 		dojo	  : "http://ajax.googleapis.com/ajax/libs/dojo/1.8.0/dojo/dojo.js",
@@ -16,6 +18,20 @@
 	for (var i=0;i<query.length;i++) {
 		d = query[i].split('=');
 		params[d[0]] = d[1];
+	}
+	
+	function getEveLocation() {	
+		
+		//If nothing is set, just return the default.
+		if (!params.eve_file) return frameworks.eve;
+		
+		//If we're looking for a normal HTTP request (ie, we're trying to test
+		//the CDN), continue.
+		if (params.eve_file.match(/^https?:\/\//)) return loc;
+		
+		//Otherwise, use the framework list for the proper file path.
+		return frameworks[params.eve_file];
+	
 	}
 	
 	//Outputs the final results to a pretty list.
@@ -113,7 +129,8 @@
 	}
 
 	function loadEnvironment() {
-		loadScript("../src/eve.js", function() {
+		var eve = getEveLocation();
+		loadScript(eve, function() {
 			loadScript(frameworks[framework], function() {
 				if (params.conflict) Eve.setFramework(framework);
 				loadScript("../examples/"+framework+'.js');
