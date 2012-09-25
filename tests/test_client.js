@@ -26,7 +26,7 @@
 			if (k=='results'||k=='done'||k=='auto') continue;
 			pstring += '&'+k+'='+params[k];
 		}
-		els = document.getElementById('framework-select').getElementsByTagName('a');
+		els = document.getElementById('framework-list').getElementsByTagName('a');
 		for (var i = 0; i<results.length; i++) {
 			total  = Number(results[i].split('-')[1]);
 			passes = total - Number(results[i].split('-')[0]);
@@ -51,6 +51,12 @@
 			document.getElementById('results').className = (finals.passes==finals.total) ? 'passed' : 'failed';
 			document.getElementById('results-list').appendChild(li);
 		}
+		var eve_loc = getEveLocation(),
+		    testedAgainst = document.getElementById('tested-against');
+		
+		testedAgainst.href = eve_loc;
+		testedAgainst.innerHTML = eve_loc;
+		
 		finals.failures = finals.total - finals.passes;
 		window.Eve_results = finals;
 	};
