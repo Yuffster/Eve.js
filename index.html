@@ -24,7 +24,7 @@
 				<li>
 					<a href="http://evejs.com/stable/run_tests.html">Run Unit Tests</a>
 				</li>
-				<li class="download right"><a href="#">Download (v0.8)</a>
+				<li class="download right"><a>Download <span id="latest-version"></a>
 					<ul>
 						<li><a href="http://evejs.com/stable/eve.min.js">Minified</a></li>
 						<li><a href="http://evejs.com/stable/eve.js">Uncompressed</a></li>
@@ -281,5 +281,26 @@ Eve.debug('jimsSlideshow');
 			
 			
 		</section>
+<script>
+	/* Automatically update the version number until I have time to
+	make the site more dynamic.
+	*/
+	(function() {
+
+	function jsonp(url,callback) {
+		var cbname = 'callback_'+Math.random().toString(36).substring(7)+new Date().getTime();
+		url = (url.match(/\?/)) ? url+'&callback='+cbname : url+'?callback='+cbname;
+		window[cbname] = callback;
+		var s = document.createElement('script');
+		s.src = url;
+		document.getElementsByTagName('head')[0].appendChild(s);
+	};
+
+	jsonp('https://api.github.com/repos/Yuffster/eve.js/tags', function(d) {
+		document.getElementById('latest-version').innerHTML = '('+d.data[0].name+')';
+	});
+
+	})();
+</script>
 	</body>
 </html>
