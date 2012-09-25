@@ -1,10 +1,12 @@
 STATUS=0
+URL_OPTS=$1
 function phantom {
-	phantomjs tests/phantom.js $1
+	phantomjs tests/phantom.js "$URL_OPTS&$1"
 	if [ "$?" -gt 0 ]; then
 		STATUS=1
 	fi
 }
+
 # Run unit tests
 echo "Running base tests."
 phantom
@@ -16,4 +18,5 @@ echo "Simulating a Dojo conflict."
 phantom conflict=dojo
 echo "Simulating a YUI conflict."
 phantom conflict=yui
+
 exit $STATUS
