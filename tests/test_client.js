@@ -65,7 +65,7 @@
 	params.results = (params.results) ? params.results.split(';') : [];
 	
 	var framework = params.runner,
-		els = document.getElementById('framework-select').getElementsByTagName('a'),
+		els = document.getElementById('framework-list').getElementsByTagName('a'),
 		tests = [], i;
 	
 	for (i=0;i<els.length;i++) {
