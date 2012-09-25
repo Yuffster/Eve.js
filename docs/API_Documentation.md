@@ -191,7 +191,13 @@ this.find(selector);
 
 #### Arguments
 
-- selector (string): A CSS selector.
+- selector (string): A CSS selector.  If no selector is provided, the result will be either a list of nodes matching the parent namespace selector or a single element representing the parent namespace of the current event target.
+
+#### Returns
+
+When inside of a base .scope method, file will return the result of host framework query, which will usually be an array or nodelist.
+
+If this.find is called with no arguments within a .listen event, however, the result will be the parent element of the current event target.
 
 #### Example
 
@@ -200,11 +206,18 @@ this.find(selector);
 		//Will return all .image-slideshow img items.
 		this.find('img');
 		
+		//Will return all '.image-slideshow' elements on the page.
+		this.find();
+		
 	    this.listen('a', 'click', function() {
 		
 			// Only returns img.active items within the current
 			// .image-slideshow element.
 	        this.find('img.active');
+	
+			//Returns the parent .image-slideshow element of ONLY
+			//the current event target.
+			this.find();
 	
 	    });
 
