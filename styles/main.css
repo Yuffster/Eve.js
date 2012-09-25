@@ -420,8 +420,9 @@ ul.navigation li ul {
 	top: 28px;
 	left:-10px;
 	z-index:999;
-	padding-top:3px;
 	padding-left:20px;
+	padding-top:10px;
+	border-radius: 0 0 10px 10px;
 	display:none;
 }
 
@@ -443,8 +444,12 @@ ul.navigation > li:hover > a {
 	color: #DCBC45;
 }
 
+ul.navigation ul li > a {
+	width:100%;
+}
+
 ul.navigation ul li:hover > a {
-	color: #ccc;
+	color: #DCBC45;
 }
 
 ul.navigation li:hover ul {
@@ -465,7 +470,7 @@ ul.navigation li.download > a {
 	background:url(./i/icon_download_16.png) right 0 no-repeat;
 }
 
-ul.navigation li.download:hover >  a {
+ul.navigation li.download:hover > a {
 	color: #c7471c;
 	background-position: right 66%;
 }
