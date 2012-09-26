@@ -20,6 +20,9 @@
 #     7. Create a new tag with the version number provided
 #     8. Merge master branch with stable branch
 #     9. Push tags and changes through Git
+#    10. If a second argument is provided for the location of the local fork
+#        of CDNJS, the script will copy the new eve.min.js file to the new
+#        version directory, update package.json and commit/push the changes.
 #
 # If the unit tests fail, the script will attempt to restore the previous
 # version of eve.min.js.
