@@ -65,6 +65,9 @@ function check_status {
 	fi
 }
 
+echo "Ensuring we're on the master branch"
+git checkout master
+
 echo "Stashing changes for clean working tree."
 echo "Run 'git stash pop' to restore if something goes wrong."
 git stash --keep-index -q
