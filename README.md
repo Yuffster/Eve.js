@@ -22,6 +22,8 @@ You'll need to be using one of the following supported frameworks:
 
 The latest stable minified library version lives at <http://evejs.com/stable/eve.min.js>.
 
+You can also find a mirror of this file and previous versions on [CDNJS](http://cdnjs.com).
+
 ## Running the Unit Tests
 
 To run the complete test suite, point your browser locally to the `run_tests.html` file.  This will run
