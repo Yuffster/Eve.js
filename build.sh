@@ -31,11 +31,11 @@ if [ $# -lt 1 ]; then
 fi
 
 VERSION=$1
-VERSION_STRING="Eve.js <evejs.com> - v$1 $(date +"%B %d, %Y")"
+VERSION_STRING="Eve.js <evejs.com> - v$VERSION $(date +"%B %d, %Y")"
 
 # Ensure the version number is in the currect format, mainly so we don't end
 # up accidentally tagging something as vv1.3.
-if [[ $1 =~ [^0-9.]|\.\.|\.$ ]]; then
+if [[ $VERSION =~ [^0-9.]|\.\.|\.$ ]]; then
 	echo "Version number can only contain numbers separated by dots."
 	exit 1
 fi
