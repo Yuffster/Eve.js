@@ -4,6 +4,7 @@
 
 * Moved assertion methods outside of Eve scopes for more reliable testing
 * Internal file reorganization and general polish
+* Added Eve.js to CDNJS <cdnjs.com>
 
 ## v0.8 (Sep 23, 2012)
 
