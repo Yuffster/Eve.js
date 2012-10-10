@@ -90,19 +90,11 @@ TOUCHED=1
 # Write the version number to the top of our new eve.min.js
 echo // $VERSION_STRING >> eve.min.js
 
-# Recompile src/eve.js and save in eve.min.js
-echo "Compiling with Google Closure Compiler"
-curl -s \
-	-d output_format=text \
-	-d compilation_level=SIMPLE_OPTIMIZATIONS \
-	-d output_info=compiled_code \
-	--data-urlencode "js_code@src/eve.js" \
-	http://closure-compiler.appspot.com/compile \
-	>> eve.min.js
+./scripts/compile.sh src/eve.js eve.min.js
 
 # Run the unit tests again against the minified version.
 echo "Running tests against minifed version..."
-./tests/run_tests.sh eve_file=eve.min
+./scripts/test.sh eve_file=eve.min
 check_status
 
 # We're done testing, so we can write the version number to the main eve.js
@@ -114,6 +106,8 @@ sed -i "" "s/\"version\": \".*\"/\"version\": \"$VERSION\"/" package.json
 echo "Build succeeded."
 
 echo "Commiting to Git."
+
+exit
 
 # Add the new eve.min.js file and package.json to the repository.
 git add eve.min.js package.json src/eve.js
