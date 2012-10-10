@@ -11,7 +11,7 @@
 		}
 	],
 	"scripts":{
-		"test": "tests/run_tests.sh"
+		"test": "scripts/test.sh"
 	},
 	"repositories": [
 		{
