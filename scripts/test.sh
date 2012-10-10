@@ -5,7 +5,7 @@
 # Runs the unit tests (tests/run_tests.html), first normally and then with
 # conflicting frameworks for each supported combination.
 #
-# Usage: ./compile.sh <in> <out>
+# Usage: ./test.sh <URL parameters>
 
 STATUS=0
 URL_OPTS=$1
