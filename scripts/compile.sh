@@ -7,7 +7,7 @@
 # Usage: ./compile.sh <in> <out>
 
 if [ "$#" -lt 2 ]; then
-	echo "Usage: ./minify.sh <input> <output>"
+	echo "Usage: ./compile.sh <input> <output>"
 fi
 
 curl -s \
