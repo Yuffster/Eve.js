@@ -6,7 +6,7 @@
 #
 # Usage:
 #
-#     ./build.sh <version>
+#     ./tag_release.sh <version>
 #
 # Assuming you don't have any bugs in your code, this file will perform the
 # following actions:
@@ -106,8 +106,6 @@ sed -i "" "s/\"version\": \".*\"/\"version\": \"$VERSION\"/" package.json
 echo "Build succeeded."
 
 echo "Commiting to Git."
-
-exit
 
 # Add the new eve.min.js file and package.json to the repository.
 git add eve.min.js package.json src/eve.js
