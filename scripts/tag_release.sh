@@ -77,7 +77,7 @@ git stash --keep-index -q
 
 # Run our tests against the main eve.js file and ensure that they've passed.
 echo "Running tests against src/eve.js..."
-./tests/run_tests.sh
+./scripts/test.sh
 check_status
 
 # Run the main eve.js file through Google Closure Compiler.
