@@ -1,5 +1,13 @@
 # Eve.js Changelog
 
+## v0.8.3 (Nov 24, 2012)
+
+* Omitted duplicate variable declaration
+
+## v0.8.2 (Nov 23, 2012)
+
+* Fixed leaky undeclared variable.
+
 ## v0.8.1 (Sep 24, 2012)
 
 * Moved assertion methods outside of Eve scopes for more reliable testing
