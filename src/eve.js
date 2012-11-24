@@ -169,7 +169,7 @@ var Scope = {
 		var name = this.name,
 			sel	 = (this.namespace+' '+selector).trim(),
 			obj  = { };
-			for (k in this) if (this.hasOwnProperty(k))	obj[k] = this[k];
+			for (var k in this) if (this.hasOwnProperty(k))	obj[k] = this[k];
 			function fun(e,t) {
 				dbug(name, sel+':'+event);
 				obj.event = e;
