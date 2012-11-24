@@ -69,7 +69,7 @@ function dbug(name, message) {
 function bindToScope(fun, obj, reg, name) {
 	
 	for (var k in Scope) obj[k] = Scope[k];
-	for (var k in _extensions) obj[k] = _extensions[k];
+	for (k in _extensions) obj[k] = _extensions[k];
 	
 	if (using("YUI")) {
 		YUI().use('node', function(Y) {
