@@ -1,5 +1,5 @@
 /**
- * Eve.js <evejs.com> - v0.8.1 September 24, 2012
+ * Eve.js <evejs.com> - v0.8.2 November 23, 2012
  *
  *	   A JavaScript meta-framework for scoped event delegation.
  * 
