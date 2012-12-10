@@ -25,7 +25,6 @@
 * Improved test runner for Internet Explorer
 * Refactored to provide two "classes", `Eve` and `Scope`, which are consistent with the public API
 * Non-API methods and variables moved to internal closure
-* Now sending a free shirt to the first person to submit a pull request to remove this line
 * Added test mechanisms for testing any host framework with a conflicting host framework
 * Run through every framework conflict possibility during integration test
 * Simplified Scope.find by combining standard find and event-contextual find
