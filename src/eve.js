@@ -2,9 +2,9 @@
  * Eve.js <evejs.com> - v0.8.3 November 24, 2012
  *
  *	   A JavaScript meta-framework for scoped event delegation.
- * 
+ *
  * Copyright (c) 2012 Michelle Steigerwalt, http://evejs.com/
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
  * "Software"), to deal in the Software without restriction, including
@@ -12,10 +12,10 @@
  * distribute, sublicense, and/or sell copies of the Software, and to
  * permit persons to whom the Software is furnished to do so, subject to
  * the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -67,10 +67,10 @@ function dbug(name, message) {
 };
 
 function bindToScope(fun, obj, reg, name) {
-	
+
 	for (var k in Scope) obj[k] = Scope[k];
 	for (k in _extensions) obj[k] = _extensions[k];
-	
+
 	if (using("YUI")) {
 		YUI().use('node', function(Y) {
 			_dom  = Y.one;
@@ -89,7 +89,7 @@ function bindToScope(fun, obj, reg, name) {
 
 //The primary Eve API.
 window.Eve = {
-	
+
 	setFramework: function(fw) {
 		_framework = (fw+"").toLowerCase();
 		if (_framework=='jquery') $ = jQuery; //No-conflict compat.
@@ -111,7 +111,7 @@ window.Eve = {
 		_registry[name] = obj;
 		return this;
 	},
-	
+
 	extend: function(key, fun) {
 		_extensions[key] = fun;
 	},
@@ -150,9 +150,9 @@ window.Eve = {
 };
 
 var Scope = {
-	
+
 	listen: function(selector, event, handler) {
-		
+
 		//There's a special hell for putting optional parameters at the
 		//beginning.  A special and awesome hell.
 		if (!handler) {
@@ -197,7 +197,7 @@ var Scope = {
 		}
 
 	},
-	
+
 	find: function(sel) {
 		var scope, ns = this.namespace;
 		if (!sel || typeof(sel)=='string') { sel = (sel || '').trim(); }
@@ -221,7 +221,7 @@ var Scope = {
 			return (this.event) ? scope[all](sel) : scope[all](ns+' '+sel);
 		}
 	},
-	
+
 	first: function(sel,result) {
 		result = (arguments.length==2) ? result : this.find(sel);
 		if (using('YUI')) result = result.getDOMNodes();
@@ -236,7 +236,7 @@ var Scope = {
 	attach: function(moduleName, ns) {
 		Eve.attach(moduleName, this.namespace+' '+(ns||''));
 	}
-	
+
 };
 
 })();

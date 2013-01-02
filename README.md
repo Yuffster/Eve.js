@@ -2,7 +2,7 @@
 
 [![Build Status](https://secure.travis-ci.org/Yuffster/Eve.js.png)](http://travis-ci.org/Yuffster/Eve.js)
 
-A <3kb JavaScript file providing three simple methods to organize code into CSS namespaces which magically restrict code to the current context, allowing for dramatic reductions to code size and development time. 
+A <3kB JavaScript file providing three simple methods to organize code into CSS namespaces which magically restrict code to the current context, allowing for dramatic reductions to code size and development time.
 
 <http://evejs.com>
 
@@ -75,6 +75,8 @@ The vast majority of the power of Eve.js can be unlocked by chaining together th
 
 	});
 
+Complete API Documentation can be found [here](http://github.com/Yuffster/Eve.js/blob/master/docs/API_Documentation.md)
+
 ## Reusable Modules
 
 Additionally, you can create reusable modules which can then be attached to several CSS namespaces at once, providing for powerful and adaptive code reuse.
@@ -114,23 +116,23 @@ No problem, let's just extend Eve to do it for us:
 	//Attach a new .handle method to the Scope object,
 	//so that it will be available within any Eve.js scope.
 	Eve.extend('handle', function(action,evt,fun) {
-	
+
 		this.listen("[data-action="+action+"]", evt, fun);
-		
+
 	});
-	
+
 	Eve.scope('.slideshow', function() {
-	
+
 		//Now we can use the handle method below instead of typing out
 		//this.listen("[data-action=advance]", 'click', function);
 		this.handle('advance', 'click', function(e) {
-		
+
 			this.find('.current')
 				.removeClass('.current')
 				.getNext().addClass('current');
-				
+
 		});
-		
+
 	});
 
 ## Attach Scopes to Dynamically Inserted Content
@@ -149,10 +151,10 @@ With Eve.debug, you can automatically log any event as it's triggered along with
 
 	//Now click on things and watch the console!
 	Eve.debug();
-	
+
 	//You can also debug just specific namespaces.
 	Eve.debug('.slideshow');
-	
+
 	//Or modules.
 	Eve.debug('jimsSlideshow');
 
