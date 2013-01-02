@@ -75,6 +75,8 @@ The vast majority of the power of Eve.js can be unlocked by chaining together th
 
 	});
 
+Complete API Documentation can be found [here](http://github.com/Yuffster/Eve.js/blob/master/docs/API_Documentation.md)
+
 ## Reusable Modules
 
 Additionally, you can create reusable modules which can then be attached to several CSS namespaces at once, providing for powerful and adaptive code reuse.
