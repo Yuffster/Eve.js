@@ -1,5 +1,11 @@
 # Eve.js Changelog
 
+## v0.8.4 (Feb 18, 2013)
+
+* Fixed several super-critical whitespace errors
+* Eve.js will now export itself as a module if module.exports is bound to the local scope
+* Eve.js should now be compatible with [client_require](http://github.com/Yuffster/client_require)
+
 ## v0.8.3 (Nov 24, 2012)
 
 * Omitted duplicate variable declaration
