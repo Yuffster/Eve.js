@@ -297,7 +297,16 @@ Eve.debug('jimsSlideshow');
 	};
 
 	jsonp('https://api.github.com/repos/Yuffster/eve.js/tags', function(d) {
-		document.getElementById('latest-version').innerHTML = '('+d.data[0].name+')';
+		var biggest = [0,0,0], comp, n;
+		for (var i in d.data) {
+			comp = d[i].name.split('.');
+			for (n in comp) comp[n] = parseInt(comp[n]);
+			for (n in biggest) {
+				if (biggest[n]<comp[n]) biggest = comp[n];
+				else if (biggest[n]!=comp[n]) break;
+			}
+		}
+		document.getElementById('latest-version').innerHTML = '('+biggest.join('.')+')';
 	});
 
 	})();
