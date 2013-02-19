@@ -1,6 +1,7 @@
 {
 	"name": "Eve.js",
 	"filename": "eve.min.js",
+	"main":"eve.min.js",
 	"version": "0.8.4",
 	"description": "A JavaScript meta-framework for scoped event delegation.",
 	"homepage": "http://evejs.com",
