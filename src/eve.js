@@ -24,7 +24,7 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-(function() {
+(function(ns) {
 
 var _registry = {}, _scopes = {}, _attachments = {}, _extensions = {},
     _debugging = [], _debugAll = false, _framework, _dom;
@@ -88,7 +88,7 @@ function bindToScope(fun, obj, reg, name) {
 };
 
 //The primary Eve API.
-window.Eve = {
+ns.Eve = {
 
 	setFramework: function(fw) {
 		_framework = (fw+"").toLowerCase();
@@ -239,4 +239,5 @@ var Scope = {
 
 };
 
-})();
+})(this);
+if (this.module) this.module.exports = this.Eve;
