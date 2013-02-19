@@ -299,10 +299,11 @@ Eve.debug('jimsSlideshow');
 	jsonp('https://api.github.com/repos/Yuffster/eve.js/tags', function(d) {
 		var biggest = [0,0,0], comp, n;
 		for (var i in d.data) {
-			comp = d[i].name.split('.');
+			comp = d.data[i].name.replace(/[^0-9.]/g, '').split('.');
 			for (n in comp) comp[n] = parseInt(comp[n]);
-			for (n in biggest) {
-				if (biggest[n]<comp[n]) biggest = comp[n];
+			for (n = 0;n<3;n++) {
+				if (!biggest[n]) biggest[n] = 0;
+				if (biggest[n]<comp[n]) biggest = comp;
 				else if (biggest[n]!=comp[n]) break;
 			}
 		}
