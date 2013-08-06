@@ -34,7 +34,7 @@ function detectFramework() {
 
 	if (_framework) return _framework;
 
-	var fws = ['jQuery', 'MooTools', 'YUI', 'Prototype', 'dojo'];
+	var fws = ['Zepto', 'jQuery', 'MooTools', 'YUI', 'Prototype', 'dojo'];
 	for (var i = 0; i<= fws.length; i++) {
 		if (window[fws[i]]) {
 			Eve.setFramework(fws[i]);
@@ -93,6 +93,7 @@ ns.Eve = {
 	setFramework: function(fw) {
 		_framework = (fw+"").toLowerCase();
 		if (_framework=='jquery') $ = jQuery; //No-conflict compat.
+		if (_framework=='zepto') $ = Zepto; //No-conflict compat.
 	},
 
 	debug: function(moduleName) {
@@ -174,14 +175,14 @@ var Scope = {
 				dbug(name, sel+':'+event);
 				obj.event = e;
 				if (using("MooTools")) { e.target = t; }
-				if (using("jQuery"))   { e.target = e.currentTarget; }
+				if (using("jQuery") || using("Zepto"))   { e.target = e.currentTarget; }
 				if (using("dojo"))     { e.target = e.explicitOriginalTarget; }
 				handler.apply(obj, arguments);
 			};
 
 		//JavaScript framework development is so much easier when you let some
 		//other framework do most of the work.
-		if (using("jQuery")) {
+		if (using("jQuery") || using("Zepto")) {
 			$(scope).delegate(sel, event, fun);
 		} else if (using('MooTools')) {
 			//I really hate the MooTools event delegation syntax.
@@ -205,9 +206,11 @@ var Scope = {
 		//event.
 		var t  = (this.event) ? this.event.target : document.body;
 		if (using('jQuery')) t = jQuery(t);
+		if (using('Zepto')) t = Zepto(t);
 		if (_dom) t = _dom(t);
 		var map = {
 			jQuery: ['is', 'parents', 'find'],
+			Zepto: ['is', 'parents', 'find'],
 			MooTools: ['match', 'getParent', 'getElements'],
 			Prototype: ['match', 'up', 'select'],
 			YUI: ['test', 'ancestor', 'all'],
