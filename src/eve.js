@@ -243,4 +243,5 @@ var Scope = {
 };
 
 })(this);
-if (this.module) this.module.exports = this.Eve;
+
+if (this.module && this.module.exports) this.module.exports = this.Eve;
