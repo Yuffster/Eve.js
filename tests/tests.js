@@ -177,6 +177,27 @@
 	});
 	
 	test("Should scope listener .find to event namespace.", function() {
+
+		var listenContext, scopeContext;
+
+		Eve.scope('.parent-namespace', function() {
+
+			this.listen('click', function() {
+				listenContext = this.find();
+			});
+
+			scopeContext = this.find();
+
+		});
+
+		var el1 = simulate('m1-1', 'click'),
+		    el2 = simulate('m2-1', 'click');
+		ok(el1.className=='active', "Clicked module one element is active.");
+		ok(el2.className=='active', "Clicked module two element is active.");
+		ok(el1.className=='active', "Clicked module one element is still active.");
+	});
+
+	test("Should scope listener .find with no arguments to context namespace.", function() {
 		var el1 = simulate('m1-1', 'click'),
 		    el2 = simulate('m2-1', 'click');
 		ok(el1.className=='active', "Clicked module one element is active.");
