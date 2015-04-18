@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Eve.JS Test Runner</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body>
+
+	<style type="text/css">
+		#tabs {
+			text-align:center;
+		}
+		#tabs a {
+			color: white;
+		}
+		#tabs span.label {
+			font-family:Helvetica,Arial,sans-serif;
+			font-size:18px;
+			color: #fff;
+			text-shadow: 1px 1px 0 #000000;
+		}
+		#framework-select h1 {
+			display:inline-block;
+		}
+		#framework-select h1 a {
+			background: url('eve_logo_small.png') no-repeat;
+			text-indent:-999em;
+			display: inline-block;
+			width:144px;
+			height:43px;
+		}
+		#framework-select ul {
+			display:inline-block;
+			padding:0;
+		}
+		#framework-select li {
+			display:inline-block;
+			padding:0 15px;
+		}
+		#framework-select li.active a {
+			text-decoration:none;
+			color: #FFFFFF;
+			text-shadow: 1px 1px 0 #000000;
+			cursor: default;
+		}
+		#framework-select li a.passed {
+			color:#DEFFDA;
+			text-shadow: 1px 1px 0 #000000;
+		}
+		#framework-select li a.failed {
+			color:#FFDADA;
+			text-shadow: 1px 1px 0 #000000;
+		}
+		#framework-select li a {
+			font-size:24px;
+			font-family:sans-serif;
+			color: #DAEAFF;
+			text-decoration:none;
+		}
+		body {
+			background: #1E5799;
+		}
+		body #qunit-fixture {
+			display:none;
+		}
+		body #results,body #intro {
+			display:none;
+		}
+		body.tests-finished #results,body.tests-pending #intro {
+			background: none repeat scroll 0 0 #000000;
+			color: #CCCCCC;
+			font-family: Monaco,monospace;
+			padding: 10px;
+			width: 80%;
+			margin: auto;
+			display:block;
+			border-radius:5px;
+		}
+		#qunit {
+			width:80%;
+			margin: auto;
+		}
+		#results h2,#intro h2 {
+			padding:0;
+			margin:0;
+			font-weight:normal;
+			font-size: 30px;
+			font-family: Monaco,monospace;
+		}
+		#results ul {
+			list-style:none;
+			font-size: 18px;
+		}
+		#results ul a,#results ul a:visited {
+			display:inline-block;
+			width:150px;
+			color: #DAEAFF;
+		}
+		#results ul a,#results ul a:visited {
+			display:inline-block;
+			width:150px;
+			color: #DAEAFF;
+		}
+		#results ul li .label {
+			text-transform: uppercase;
+		}
+		#results ul li.fail .label {
+			color:red;
+		}
+		#results ul li.pass .label {
+			color: #00FF22;
+		}
+		#results .prompt {
+			color:#777;
+		}
+		#results .plug-modal {
+			color: #fff;
+			font-size:24px;
+		}
+		#results .plug-modal .mode {
+			display:none;
+		}
+		#results.passed .plug-modal .hurray {
+			display:inline;
+		}
+		#results.failed .plug-modal .ohnoes {
+			display:inline;
+		}
+		#results .ohnoes a,#results .ohnoes a:visited {
+			color:red;
+		}
+		#results .hurray {
+			color: #fff;
+		}
+		#results .hurray a {
+			text-decoration:none;
+			color: #DCBC45;
+		}
+		#results .heart {
+			color: #FFD1E8;
+		}
+		#status-template {
+			display:none;
+		}
+		#intro {
+			display:none;
+		}
+		#intro .plug-modal {
+			margin-top:20px;
+			font-size:24px;
+		}
+		#intro  a, #intro a:visited {
+			font-weight:bold;
+			color:#fff;
+		}
+	</style>
+	
+	
+	<div id="tabs">
+		<navigation id="framework-select">
+			<h1><a href="http://evejs.com">Eve.js Test Runner</a></h1>
+			<ul id="framework-list">
+				<li id="fw-zepto"><a href="?runner=zepto">Zepto</a></li>
+				<li id="fw-jquery"><a href="?runner=jquery">jQuery</a></li>
+				<li id="fw-mootools"><a href="?runner=mootools">MooTools</a></li>
+				<li id="fw-prototype"><a href="?runner=prototype">Prototype</a></li>
+				<li id="fw-dojo"><a href="?runner=dojo">Dojo</a></li>
+				<li id="fw-yui"><a href="?runner=yui">YUI</a></li>
+			</ul>
+		</navigation>
+		<a id="run-all" href="?auto=on">autorun</a>
+	</div>
+	
+	<div id="qunit"></div>
+	
+	<div id="intro">
+		
+		<h2>Welcome to the Eve.js Test Suite</h2>
+		
+		<div class="plug-modal">
+			<span class="prompt">&gt;</span> 
+			<a href="?auto=on">Run all tests</a>
+		</div>
+		
+	</div>
+	
+	<div id="results">
+		<h2>All tests complete:</h2>
+		<ul id="results-list">
+			<li>Tested against: <a href="#" id="tested-against"> </a></li>
+			<li id="status-template" class="{{status}}">
+				<a>{{name}}</a>:
+				<span class="points">{{passes}}/{{total}}</span>
+				[<span class="label">{{status}}</span>]
+			</li>
+		</ul>
+		<div class="plug-modal">
+			<span class="prompt">&gt;</span> 
+			<span class="mode hurray">
+				Thanks for using <a href="http://evejs.com">Eve.js</a>! <span class="heart">&#x2764;</span>
+			</span>
+			<span class="mode ohnoes">
+				Oh no, a bug!  Would you like to <a href="https://github.com/Yuffster/Eve.js/issues/new">report it</a>?
+			</span>
+		</div>
+	</div>
+	
+	<div id="qunit-fixture">
+		<div class="list-module" id="m1">
+
+			This is list module one.
+	
+			<div class="child_area">
+	  
+				<ul>
+					<li id="m1-1">Link One</li>
+					<li id="m1-2">Link Two</li>
+					<li id="m1-3">Link Three</li>
+				</ul>
+		  
+		   </div>
+
+		</div>
+
+		<hr/>
+
+		<div class="list-module" id="m2">
+
+			This is list module two.
+	
+			<div class="child_area">
+	  
+				<ul>
+					<li id="m2-1">Link Four</li>
+					<li id="m2-2">Link Five</li>
+					<li id="m2-3">Link Six</li>
+				</ul>
+
+		   </div>
+
+		</div>
+
+		<hr/>
+
+		<div class="other-module" id="m3">
+
+			This is a different module.
+	
+			<div class="child_area">
+	  
+				<ul id="m3-ul">
+					<li id="m3-1">Link One</li>
+					<li id="m3-2">Link Two</li>
+					<li id="m3-3">Link Three</li>
+				</ul>
+		  
+		   </div>
+
+		</div>
+
+		<div class="parent-namespace" id="m4">
+
+			This is a different module.
+	
+			<div class="child_area">
+	  
+				<ul id="m4-ul">
+					<li id="m4-1">Link One</li>
+					<li id="m4-2">Link Two</li>
+					<li id="m4-3">Link Three</li>
+				</ul>
+		  
+		   </div>
+
+		</div>
+
+		<div class="parent-namespace" id="m5">
+
+			This is a different module.
+	
+			<div class="child_area">
+	  
+				<ul id="m5-ul">
+					<li id="m5-1">Link One</li>
+					<li id="m5-2">Link Two</li>
+					<li id="m5-3">Link Three</li>
+				</ul>
+		  
+		   </div>
+
+		</div>
+		
+		<div class="extended-area">
+			
+			<a href="#" id="bing-target" data-action="bing">Ping</a>
+			
+		</div>
+		
+		<a href="#" id="bing-target2" data-action="bing">Ping</a>
+		
+		<div id="outer_scope">
+
+			<div class="inner_scope">
+				<a href="#" id="inside-scope">In scope</a>
+				<span id="out-of-recursive-scope" class="second">Out of scope</span>	
+				<div id="another_scope">
+					<span id="inside-recursive-scope">In scope</a>	
+				</div>
+			</div>
+
+		</div>
+
+		<div class="inner_scope">
+			<a href="#" id="out-of-scope">Out of scope</a>
+		</div>
+		
+		<div id="click-me"><a id="click-me-a">Hello</a></div>
+		
+		<div id="els-list">
+			<span id="first">1</span>
+			<span id="second">2</span>
+		</div>
+		
+	</div>
+	
+	<script type="text/javascript" src="test_client.js"></script>
+	
+</body>
+</html>
